@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Block
   - Ball
-  - Paddle
+  - Player
   - Item
   - Wall
   - Bottom
