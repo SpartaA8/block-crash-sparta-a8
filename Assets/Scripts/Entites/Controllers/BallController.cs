@@ -11,7 +11,8 @@ public class BallController : MonoBehaviour
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        //trailRenderer = GetComponent<TrailRenderer>();        
+        //trailRenderer = GetComponent<TrailRenderer>();
+        defaultSpeed = 5f;
     }
 
     public void Copy()
@@ -52,10 +53,11 @@ public class BallController : MonoBehaviour
         if (collision.gameObject.layer == blockLayer)
         {
             //Block부시는로직
+            Debug.Log("Hit");
         }
         if (collision.gameObject.layer == bottomLayer)
         {
-            //Destroyed();
+            Destroyed();
         }
     }
 

@@ -21,12 +21,12 @@ public class GameManager : MonoBehaviour
     private int stageLevel = 1;
     private bool isMulti = false;
     private int life;
-    public int ballCount = 1;
+    private int ballCount;
 
     public ObjectPool ObjectPool { get; private set; }
 
     private void Awake()
-    {
+    {        
         if (Instance != null) Destroy(gameObject);
         Instance = this;        
     }
@@ -43,19 +43,21 @@ public class GameManager : MonoBehaviour
 
     private void StartStage(int stageLevel)
     {
-        ResetPlayerPos();
-        GameObject obj = CreateBalls();
-        //obj.transform.parent = players[0].transform;
-        obj.transform.position = new Vector3(0, -3.2f, 0);         
-        stageController.StartStage(stageLevel);
-        obj.GetComponent<Rigidbody2D>().velocity = Vector3.down * 5f;
+        life = 2;
+        ballCount = 0;
+        ResetPlayerPos();                
+        stageController.StartStage(stageLevel);        
     }
 
     private void ResetPlayerPos()
     {  
         Vector3 startPos = isMulti ? Vector3.left * 2 : Vector3.zero;
-        players[0].transform.position += startPos;
-        if (isMulti) players[1].transform.position -= startPos;
+        startPos += Vector3.down * 4.2f;
+        players[0].transform.position = startPos;
+        if (isMulti) players[1].transform.position = -startPos;
+        GameObject obj = CreateBalls();
+        obj.transform.position = new Vector3(0, -3.2f, 0);
+        obj.GetComponent<Rigidbody2D>().velocity = Vector3.down * 5f;
     }
 
     // ºí·Ï ÆÄ±« ½Ã 
@@ -94,11 +96,16 @@ public class GameManager : MonoBehaviour
 
     public void DestroyBalls()
     {
-        if (--ballCount == 0) GameOver();
+        if (--ballCount == 0) 
+            GameOver();
     }
 
     private void GameOver()
     {
-        
+        if(life-- > 0)
+        {
+            ResetPlayerPos();
+            return;
+        }
     }    
 }
