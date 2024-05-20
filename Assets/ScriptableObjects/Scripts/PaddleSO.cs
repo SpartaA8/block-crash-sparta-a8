@@ -4,6 +4,6 @@
 public class PaddleSO : ScriptableObject
 {
     [Header("Paddle Info")]
-    public int size;
+    public float size;
     public float score;    
 }

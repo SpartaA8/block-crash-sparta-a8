@@ -9,8 +9,8 @@ public class PlayerInputController : PlayerController
         CallMoveEvent(inputX);
     }
 
-    public void OnFire()
+    public void OnShoot()
     {
-
+        
     }
 }

@@ -605,6 +605,71 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1001 &1271462057
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -1438808726823467207, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_GravityScale
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403950850144298872, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900387962032796625, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: SoItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 23872c2d3643fa84a83390d0452a426d, type: 2}
+    - target: {fileID: 2920494751004701249, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+      propertyPath: m_Name
+      value: Item
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
 --- !u!1 &1513072396
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,7 +780,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 999
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -839,6 +904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61745f0c6b7ea154a8b81b8d4f2a34fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player1: {fileID: 0}
+  speed: 2
 --- !u!114 &1852729072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,7 +1027,7 @@ Transform:
   m_GameObject: {fileID: 1970330923}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.2, y: 0, z: 0}
+  m_LocalPosition: {x: -4.23, y: 0, z: 0}
   m_LocalScale: {x: 0.40945578, y: 9.839375, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1076,7 +1143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2063890649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1131,6 +1198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61745f0c6b7ea154a8b81b8d4f2a34fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player1: {fileID: 0}
+  speed: 2
 --- !u!50 &2063890652
 Rigidbody2D:
   serializedVersion: 4
@@ -1143,7 +1212,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 999
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -1283,3 +1352,4 @@ SceneRoots:
   - {fileID: 1852729067}
   - {fileID: 2063890655}
   - {fileID: 1513072397}
+  - {fileID: 1271462057}
