@@ -683,6 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7aebbaee4ebc445a5db12ae10b0aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballCount: 1
 --- !u!114 &1513072399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,7 +699,9 @@ MonoBehaviour:
   pools:
   - tag: Ball
     prefab: {fileID: 1143664999338759014, guid: 36263d7f47dbcd248ac7aaff88348dc8, type: 3}
-    size: 1
+    capacity: 1
+    count: 0
+    maxCapacity: 729
 --- !u!1 &1852729066
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +755,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6be88f418aa62f94da492140b8ffa198, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -792,7 +795,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1180,7 +1183,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6be88f418aa62f94da492140b8ffa198, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1220,7 +1223,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

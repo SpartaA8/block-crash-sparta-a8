@@ -11,6 +11,6 @@ public class PlayerInputController : PlayerController
 
     public void OnFire()
     {
-
+        CallFireEvent();
     }
 }

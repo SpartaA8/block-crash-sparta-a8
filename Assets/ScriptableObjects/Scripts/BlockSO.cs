@@ -4,9 +4,8 @@
 public class BlockSO : ScriptableObject
 {
     [Header("Block Info")]
-    public int level;
-    public Color color;
+    public int level;    
     public int hp;
     public bool isInvincible;
-    public bool score;
+    public int score;
 }

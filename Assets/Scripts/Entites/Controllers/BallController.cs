@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
+    private float speed = 5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +15,28 @@ public class BallController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Copy()
+    {
+        GameObject rightBall = GameManager.Instance.CreateBalls();
+        GameObject leftBall = GameManager.Instance.CreateBalls();
+        
+        rightBall.transform.position = this.transform.position;
+        leftBall.transform.position = this.transform.position;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (IsLayerMatched(LayerMask.GetMask("Bottom"), collision.gameObject.layer))
+        {
+            GameManager.Instance.ObjectPool.ReturnObject(this.gameObject);
+            GameManager.Instance.DestroyBalls();
+        }
+    }
+
+    private bool IsLayerMatched(int value, int layer)
+    {
+        return value == (value | 1 << layer);
     }
 }
