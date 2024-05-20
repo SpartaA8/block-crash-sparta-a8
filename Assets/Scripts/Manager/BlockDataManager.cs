@@ -1,57 +1,46 @@
+using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEditor;
-using System.Xml.Linq;
-using System.Text;
 
-public class BlockDataManager
+public class BlockDataManager : MonoBehaviour
 {
-    private static BlockDataManager instance;
+    private static BlockDataManager Instance;
+    private Dictionary<int, BlockSO> blockDictionary;
+    [SerializeField] private BlockSO blockRedSO;
+    [SerializeField] private BlockSO blockOrangeSO;
+    [SerializeField] private BlockSO blockYellowSO;
+    [SerializeField] private BlockSO blockGreenSO;
+    [SerializeField] private BlockSO blockBlueSO;
+    [SerializeField] private BlockSO hardBlockSO;
+    [SerializeField] private BlockSO invincibleBlockSO;
 
-    private BlockDataManager()
+    private void Awake()
     {
-        // Json 파일 받아오기
-        BlockSO jtc = new BlockSO(); 
-        string jsonData = JsonUtility.ToJson(jtc); 
-        CreateJsonFile(Application.dataPath + "/Json/BlockData.json", jsonData);
-        var jtc2 = LoadJsonFile<BlockSO>(Application.dataPath + "/Json/BlockData.json");
-
-        //string jsonFilePath = Application.dataPath + "/Json/BlockData.json";
-        //string jsonText = File.ReadAllText(jsonFilePath);
-        //BlockSO asset = new BlockSO();
-        //asset = LoadJsonFile<BlockSO>(jsonFilePath);
-        //BlockSO asset = AssetDatabase.LoadAssetAtPath("Assets/ScriptableObjects/BlockSO/Block1Data.asset", typeof(BlockSO)) as BlockSO;
-        //string jsonSaveText = JsonUtility.ToJson(asset);
-        //JsonUtility.FromJsonOverwrite(jsonText, asset);
-        AssetDatabase.CreateAsset(jtc2, "Asset/ScriptableObjects/BlockSO/BlockData.asset");
-        AssetDatabase.SaveAssets();
-
-        EditorUtility.FocusProjectWindow();
-
-        //Selection.activeObject = asset;
+        if (Instance != null) Destroy(gameObject);
+        Instance = this;
+        SetBlockDictionary();
     }
+
+    public void SetBlockDictionary() // blockDictionary에 블록 타입별로 해당하는 BlockSO 값을 할당
+    {
+        blockDictionary = new Dictionary<int, BlockSO>();
+        blockDictionary.Add(1, blockRedSO);
+        blockDictionary.Add(2, blockOrangeSO);
+        blockDictionary.Add(3, blockYellowSO);
+        blockDictionary.Add(4, blockGreenSO);
+        blockDictionary.Add(5, blockBlueSO);
+        blockDictionary.Add(6, hardBlockSO);
+        blockDictionary.Add(7, invincibleBlockSO);
+    }
+
     public static BlockDataManager GetInstance()
     {
-        if (instance == null) instance = new BlockDataManager();
-        return instance;
+        return Instance;
     }
-    T LoadJsonFile<T>(string loadPath)
+
+    public BlockSO GetData(int id) //입력된 블록id에 해당하는 BlockSO객체를 반환
     {
-        FileStream fileStream = new FileStream(string.Format(loadPath), FileMode.Open); 
-        byte[] data = new byte[fileStream.Length];
-        fileStream.Read(data, 0, data.Length);
-        fileStream.Close(); 
-        string jsonData = Encoding.UTF8.GetString(data);
-        return JsonUtility.FromJson<T>(jsonData);
-    }
-    void CreateJsonFile(string createPath, string jsonData)
-    {
-        FileStream fileStream = new FileStream(string.Format(createPath), FileMode.Create);
-        byte[] data = Encoding.UTF8.GetBytes(jsonData); 
-        fileStream.Write(data, 0, data.Length); 
-        fileStream.Close();    
+        if(id == 0) return null;
+        return blockDictionary[id];
     }
 }

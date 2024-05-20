@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PaddleMovement : MonoBehaviour
 {
     private PlayerController controller;
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rigidbody;    
 
-    private int size;
-    private float speed = 2f;
-    private bool isCollision = false;
+    private float size;
+    private float speed = 2f;    
     private Vector3 direction;
 
     private void Awake()
     {
         controller = GetComponentInParent<PlayerController>();
-        rigidbody = GetComponent<Rigidbody2D>();        
+        rigidbody = GetComponent<Rigidbody2D>();             
     }
 
     private void Start()
@@ -24,17 +24,30 @@ public class PaddleMovement : MonoBehaviour
         controller.OnFireEvent += Fire;        
     }
 
-    private void FixedUpdate()
-    {
-        if (isCollision) rigidbody.velocity = Vector3.zero;
-        else rigidbody.velocity = direction;
+    private void Update()
+    {        
+        rigidbody.velocity = direction;
     }
 
     public void Move(float input)
     {
-        //isCollision = false;
+        if (input == 0) rigidbody.constraints |= RigidbodyConstraints2D.FreezePositionX;
+        else rigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
         direction = new Vector2(input, 0);
-        direction = direction * speed;
+        direction = direction * speed;     
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //오브젝트 충돌 후 효과 적용
+        if (collision.gameObject.layer == 9)
+        {
+            ItemController collisionController = collision.gameObject.GetComponent<ItemController>();
+            //아이템 타입 분별 및 효과 적용
+            ApplyItem(collisionController.SoItem.itemType);
+            //아이템 먹은 후 파괴
+            Destroy(collision.gameObject);
+        }
     }
 
     public void Fire()
@@ -42,33 +55,40 @@ public class PaddleMovement : MonoBehaviour
         GameManager.Instance.Copyballs();
     }
 
-    //private bool CheckCollisionByRaycast()
-    //{
-
-    //}
-
-    private void OnTriggerEnter2D(Collider2D collider)
+    public void ApplyItem(EItemType itemType)
     {
-        if (IsLayerMatched(LayerMask.GetMask("Player") | LayerMask.GetMask("Wall"), collider.gameObject.layer))
+        if (itemType == EItemType.SIZE)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 0);
-            if (hit.collider != null) isCollision = true;
-            else isCollision = false;
+            ChangeSize();
+        }
+        else if (itemType == EItemType.SPEED)
+        {
+            ChangeSpeed();
+        }
+        else if (itemType == EItemType.LIFE)
+        {
+            GameManager.Instance.AddLife();
+        }
+        else if (itemType == EItemType.COPY)
+        {
+            GameManager.Instance.Copyballs();
         }
     }
-    private void OnTriggerStay2D(Collider2D collider)
-    {
-        if (IsLayerMatched(LayerMask.GetMask("Player") | LayerMask.GetMask("Wall"), collider.gameObject.layer))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 0);
-            if (hit.collider != null) isCollision = true;
-            else isCollision = false;
-        }
-    }    
 
-    private bool IsLayerMatched(int value, int layer)
+    public void ChangeSize()
     {
-        return value == (value | 1 << layer);
+        //실제로 스케일에서 적용이 안됨
+        float randomsize = Random.Range(-1f, 2f);
+
+        size += randomsize;
+
+    }
+
+    public void ChangeSpeed()
+    {
+        float changespeed = Random.Range(-2f, 3f);
+
+        speed += changespeed;
     }
 }
 

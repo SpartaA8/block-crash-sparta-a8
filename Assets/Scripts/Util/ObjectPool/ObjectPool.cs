@@ -45,7 +45,7 @@ public class ObjectPool : MonoBehaviour
         }
         
         Pool pool = pools.Find(x => x.tag == tag);
-        if (pool.count > pool.maxCapacity) return null;
+        if (pool.count >= pool.maxCapacity) return null;
         if (pool.capacity == pool.count)
         {
             CreateObject(pool);
@@ -59,6 +59,7 @@ public class ObjectPool : MonoBehaviour
             PoolDictionary[tag].Enqueue(obj);
             obj = PoolDictionary[tag].Dequeue();
         }
+        PoolDictionary[tag].Enqueue(obj);
 
         obj.SetActive(true);
         pool.count++;

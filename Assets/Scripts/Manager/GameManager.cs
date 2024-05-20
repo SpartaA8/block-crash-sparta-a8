@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     private GameObject[] players = new GameObject[2];
+    private StageController stageController;
 
     public event Action OnCopyBallEvent;
 
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
     private int currentScore;
     private int blockCount;
     private int stageLevel = 1;
-    private bool isMulti = true;
+    private bool isMulti = false;
     private int life;
     public int ballCount = 1;
 
@@ -27,9 +28,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (Instance != null) Destroy(gameObject);
-        Instance = this;
-
-        BlockDataManager.GetInstance();
+        Instance = this;        
     }
 
     private void Start()
@@ -38,6 +37,7 @@ public class GameManager : MonoBehaviour
         players[0] = GameObject.Find("Player").transform.GetChild(0).gameObject;
         players[1] = GameObject.Find("Player").transform.GetChild(1).gameObject;
         players[1].SetActive(isMulti);
+        stageController = GameObject.Find("Stage").gameObject.GetComponent<StageController>();        
         StartStage(stageLevel);
     }    
 
@@ -45,8 +45,10 @@ public class GameManager : MonoBehaviour
     {
         ResetPlayerPos();
         GameObject obj = CreateBalls();
-        obj.transform.parent = players[0].transform;
-        obj.transform.position = new Vector3(0, -3.2f, 0);        
+        //obj.transform.parent = players[0].transform;
+        obj.transform.position = new Vector3(0, -3.2f, 0);         
+        stageController.StartStage(stageLevel);
+        obj.GetComponent<Rigidbody2D>().velocity = Vector3.down * 5f;
     }
 
     private void ResetPlayerPos()
@@ -72,8 +74,10 @@ public class GameManager : MonoBehaviour
     public GameObject CreateBalls()
     {
         GameObject obj = ObjectPool.SpawnFromPool("Ball");
-        BallController ball = obj.GetComponent<BallController>();
+        if (obj == null) return null;
+        BallController ball = obj.GetComponent<BallController>();        
         OnCopyBallEvent += ball.Copy;
+        ballCount++;
 
         return obj;
     }
@@ -85,8 +89,7 @@ public class GameManager : MonoBehaviour
 
     public void Copyballs()
     {
-        CallCopyBallEvent();
-        ballCount *= 3;
+        CallCopyBallEvent();        
     }
 
     public void DestroyBalls()

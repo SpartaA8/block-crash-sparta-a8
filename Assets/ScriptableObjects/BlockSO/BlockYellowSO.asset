@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c929030e8d21edb499a8093ed8abb6e4, type: 3}
-  m_Name: Block1Data
+  m_Name: BlockYellowSO
   m_EditorClassIdentifier: 
-  level: 1
-  color: {r: 0, g: 0, b: 0, a: 0}
   hp: 1
+  blockId: 3
+  score: 50
+  blockSpriteColor: 2
   isInvincible: 0
-  score: 100
