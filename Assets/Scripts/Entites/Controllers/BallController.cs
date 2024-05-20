@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 public class BallController : MonoBehaviour
 {
     public float defaultSpeed;
     private Rigidbody2D rigidbody;
-    //private TrailRenderer trailRenderer;    
+    private TrailRenderer trailRenderer;  
+    private BlockSO blockSO;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        //trailRenderer = GetComponent<TrailRenderer>();        
+        trailRenderer = GetComponent<TrailRenderer>();        
+    }
+
+    private void FixedUpdate()
+    {
+        rigidbody.velocity = new Vector2(Mathf.Sign(rigidbody.velocity.x) * Mathf.Abs(defaultSpeed), rigidbody.velocity.y);
     }
 
     public void Copy()
@@ -51,7 +58,7 @@ public class BallController : MonoBehaviour
         }
         if (collision.gameObject.layer == blockLayer)
         {
-            //Block부시는로직
+            ProcessBlockCollision(collision);
         }
         if (collision.gameObject.layer == bottomLayer)
         {
@@ -70,6 +77,27 @@ public class BallController : MonoBehaviour
         // X축 방향의 속도를 왼쪽 또는 오른쪽으로 반전
         float direction = isLeftCollision ? -1f : 1f;
         rigidbody.velocity = new Vector2(direction * Mathf.Abs(rigidbody.velocity.x), rigidbody.velocity.y);
+    }
+    private void ProcessBlockCollision(Collision2D collision)
+    {
+        int blockID = collision.gameObject.layer;
+        BlockSO blockSO = BlockDataManager.GetInstance().GetData(blockID);
+
+        if (blockSO != null)
+        {
+            blockSO.hp--; // 충돌한 블록의 HP 감소
+            Debug.Log("현재 HP: " + blockSO.hp);
+
+            if (blockSO.hp <= 0)
+            {
+                // 블록의 HP가 0 이하이면 블록을 파괴
+                Destroy(collision.gameObject);
+            }
+        }
+        else
+        {
+            Debug.Log("blockSO은 null");
+        }
     }
 
     private bool IsLayerMatched(int value, int layer)
