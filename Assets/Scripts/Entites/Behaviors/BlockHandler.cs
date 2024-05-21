@@ -12,7 +12,7 @@ public class BlockHandler : MonoBehaviour
 
     private void Awake()
     {
-        
+        GameManager.Instance.OnFinishStageEvent += DestroyBlock;
     }
 
     public void BlockSpriteChange()
@@ -27,19 +27,26 @@ public class BlockHandler : MonoBehaviour
         blockSO = newBlockSO;
         currentHp = blockSO.hp;
         BlockSpriteChange();
-    }
+    }    
 
     public void TakeDamage(int damage)
     {
         if (blockSO.isInvincible) return;
         currentHp -= damage;
         if (currentHp == 0)
-        {            
-            Destroy(gameObject);        
+        {  
+            Destroy(gameObject);
+            GameManager.Instance.DestroyBlock(blockSO.score);
         }
     }
+
+    private void DestroyBlock()
+    {
+        Destroy(gameObject);
+    }
+
     private void OnDestroy()
     {
-        GameManager.Instance.DestroyBlock(blockSO.score);
+        GameManager.Instance.OnFinishStageEvent -= DestroyBlock;
     }
 }
