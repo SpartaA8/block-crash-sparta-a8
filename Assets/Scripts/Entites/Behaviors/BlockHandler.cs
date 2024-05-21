@@ -6,6 +6,7 @@ public class BlockHandler : MonoBehaviour
 {
     [SerializeField]private BlockSO blockSO;
     private SpriteRenderer spriteRenderer;
+    private int currentHp;
 
     private void Awake()
     {
@@ -20,6 +21,15 @@ public class BlockHandler : MonoBehaviour
     public void SetBlockSO(BlockSO newBlockSO)
     {
         blockSO = newBlockSO;
+        currentHp = blockSO.hp;
         BlockSpriteChange();
+    }
+    public void TakeDamage(int damage)
+    {
+        currentHp -= damage;
+        if (currentHp <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
