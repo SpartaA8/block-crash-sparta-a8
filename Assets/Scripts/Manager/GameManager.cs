@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
     private int ballCount;
     private int stageLevel = 1;
     private bool isMulti = false;
-    private int life;    
+    private int life;
+    private bool isClear;
 
     public ObjectPool ObjectPool { get; private set; }
 
@@ -41,20 +42,25 @@ public class GameManager : MonoBehaviour
         players[1] = GameObject.Find("Player").transform.GetChild(1).gameObject;
         players[1].SetActive(isMulti);
         stageController = GameObject.Find("Stage").gameObject.GetComponent<StageController>();        
+        InitGame();
+    }    
+    
+    // 게임 씬 처음으로 넘어왔을때 실행할 함수
+    public void InitGame()
+    {
         StartStage(stageLevel);
         life = 0;
         for (int i = 0; i < 2; i++) AddLife();
-    }    
+    }
 
     private void StartStage(int stageLevel)
-    {
-        CallFinishStageEvent();                
+    {        
         ballCount = 0;
         currentScore = 0;
+        isClear = false;
         if (stageLevel < 5) blockCount = stageController.StartStage(stageLevel);        
 
-        ResetPlayerPos();
-        ResetBallPos();
+        ResetPlayerPos();        
     }
 
     public void CallFinishStageEvent()
@@ -67,13 +73,9 @@ public class GameManager : MonoBehaviour
         Vector3 startPos = isMulti ? Vector3.left * 2 : Vector3.zero;
         startPos += Vector3.down * 4.2f;
         players[0].transform.position = startPos;
-        if (isMulti) players[1].transform.position = -startPos;   
-    }
+        if (isMulti) players[1].transform.position = -startPos;
 
-    private void ResetBallPos()
-    {
         GameObject obj = CreateBalls();
-
         obj.GetComponent<Rigidbody2D>().velocity = (Vector3.down + Vector3.right) * 5f;
         obj.transform.position = new Vector3(0, -4f, 0);
     }
@@ -84,8 +86,12 @@ public class GameManager : MonoBehaviour
         currentScore += score;
         if(currentScore > highScore) highScore = currentScore;
 
-        if (--blockCount == 0) 
+        if (--blockCount == 0)
+        {
+            isClear = true;
+            CallFinishStageEvent();
             StartStage(++stageLevel);        
+        }             
     }
 
     public void CallChangeLifeEvent(bool isAdd)
@@ -101,7 +107,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void ReduceLife()
-    {        
+    {
+        if (isClear) return;
         if (life-- > 0)
         {
             ResetPlayerPos();
