@@ -1,61 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 public class BallController : MonoBehaviour
 {
-    public float defaultSpeed;
+    private float defaultSpeed = 2f;
     private Rigidbody2D rigidbody;
-    //private TrailRenderer trailRenderer;    
+    private TrailRenderer trailRenderer;    
+
+
+    // 공 Copy에서 사용할 각도
+    private float minRotationAngle = 30f; 
+    private float maxRotationAngle = 50f;
+    
+    private void OnEnable()
+    {
+        GameManager.Instance.OnCopyBallEvent += Copy;
+        GameManager.Instance.OnFinishStageEvent += Destroyed;
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.OnCopyBallEvent -= Copy;
+        GameManager.Instance.OnFinishStageEvent -= Destroyed;
+    }
 
     private void Awake()
-    {
+    {  
         rigidbody = GetComponent<Rigidbody2D>();
-        //trailRenderer = GetComponent<TrailRenderer>();        
+        trailRenderer = GetComponent<TrailRenderer>();       
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 
     public void Copy()
     {
+        if (!gameObject.activeSelf) return;
         GameObject rightBall = GameManager.Instance.CreateBalls();
         GameObject leftBall = GameManager.Instance.CreateBalls();
 
-        Vector2 upwardDirection = new Vector2(0, 1);
-        Vector2 rightDirection = Quaternion.Euler(0, 0, 45) * upwardDirection; // 오른쪽 방향으로 45도 회전
-        Vector2 leftDirection = Quaternion.Euler(0, 0, -45) * upwardDirection; // 왼쪽 방향으로 45도 회전
+        Vector2 currentVelocity = rigidbody.velocity;
+        float rotationAngle = Random.Range(minRotationAngle, maxRotationAngle);
+
+        Vector2 rightDirection = Quaternion.Euler(0, 0, rotationAngle) * currentVelocity.normalized;
+        Vector2 leftDirection = Quaternion.Euler(0, 0, -rotationAngle) * currentVelocity.normalized;
 
         rightBall.transform.position = this.transform.position;
         leftBall.transform.position = this.transform.position;
 
         Rigidbody2D rightRb = rightBall.GetComponent<Rigidbody2D>();
         Rigidbody2D leftRb = leftBall.GetComponent<Rigidbody2D>();
-        rightRb.velocity = rightDirection.normalized * rigidbody.velocity.magnitude;
-        leftRb.velocity = leftDirection.normalized * rigidbody.velocity.magnitude;
-    }
 
-    public void Destroyed()
-    {
-        GameManager.Instance.ObjectPool.ReturnObject(this.gameObject);
-        GameManager.Instance.DestroyBalls();
+        rightRb.velocity = rightDirection * currentVelocity.magnitude;
+        leftRb.velocity = leftDirection * currentVelocity.magnitude;
     }
+ 
 
     void OnCollisionEnter2D(Collision2D collision) //TODO ::  switch문으로 고치기
     {
-        rigidbody.velocity = rigidbody.velocity.normalized * defaultSpeed;
-        int bottomLayer = LayerMask.NameToLayer("Bottom");
-        int blockLayer = LayerMask.NameToLayer("Block");
-        int paddleLayer = LayerMask.NameToLayer("Paddle");
-
-        if (collision.gameObject.layer == paddleLayer)
+        string collisionLayerName = LayerMask.LayerToName(collision.gameObject.layer);
+        
+        switch (collisionLayerName)
         {
-            ProcessPaddleCollision(collision);
-        }
-        if (collision.gameObject.layer == blockLayer)
-        {
-            //Block부시는로직
-        }
-        if (collision.gameObject.layer == bottomLayer)
-        {
-            //Destroyed();
+            case "Player":
+                ProcessPaddleCollision(collision);
+                break;
+            case "Block":
+                ProcessBlockCollision(collision);
+                break;
+            case "Bottom":
+                //Destroyed();
+                break;
+            default:
+                break;
         }
     }
 
@@ -70,8 +90,26 @@ public class BallController : MonoBehaviour
         // X축 방향의 속도를 왼쪽 또는 오른쪽으로 반전
         float direction = isLeftCollision ? -1f : 1f;
         rigidbody.velocity = new Vector2(direction * Mathf.Abs(rigidbody.velocity.x), rigidbody.velocity.y);
+        Debug.Log("되는데");
     }
-
+    private void ProcessBlockCollision(Collision2D collision)
+    {
+        BlockHandler blockHandler = collision.gameObject.GetComponent<BlockHandler>();
+        if (blockHandler != null)
+        {
+            blockHandler.TakeDamage(1); // 블록의 HP를 감소.
+        }
+        else
+        {
+            Debug.Log("BlockHandler가 null입니다.");
+        }
+    }
+    public void Destroyed()
+    {        
+        if (!gameObject.activeSelf) return;
+        GameManager.Instance.ObjectPool.ReturnObject(this.gameObject);
+        GameManager.Instance.DestroyBalls();
+    }
     private bool IsLayerMatched(int value, int layer)
     {
         return value == (value | 1 << layer);
