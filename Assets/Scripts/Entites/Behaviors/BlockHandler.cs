@@ -26,10 +26,15 @@ public class BlockHandler : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        currentHp -= damage;
-        if (currentHp <= 0)
+        
+        if (!blockSO.isInvincible)
         {
-            Destroy(gameObject);
+            currentHp -= damage;
+            if (currentHp <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
+        
     }
 }

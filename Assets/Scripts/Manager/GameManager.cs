@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         players[1] = GameObject.Find("Player").transform.GetChild(1).gameObject;
         players[1].SetActive(isMulti);
         stageController = GameObject.Find("Stage").gameObject.GetComponent<StageController>();        
-        StartStage(stageLevel);
+        StartStage(4);
     }    
 
     private void StartStage(int stageLevel)
