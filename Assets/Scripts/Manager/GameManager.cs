@@ -51,8 +51,8 @@ public class GameManager : MonoBehaviour
         CallFinishStageEvent();                
         ballCount = 0;
         currentScore = 0;
-        if (stageLevel < 5) blockCount = stageController.StartStage(stageLevel);        
-
+        if (stageLevel < 5) blockCount = stageController.StartStage(stageLevel);
+        else stageController.BossStage();
         ResetPlayerPos();
         ResetBallPos();
     }
