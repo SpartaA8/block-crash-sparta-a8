@@ -23,7 +23,7 @@ public class ObjectPool : MonoBehaviour
     private void Awake()
     {
         PoolDictionary = new Dictionary<string, Queue<GameObject>>();
-
+        
         foreach (var pool in pools)
         {
             Queue<GameObject> queue = new Queue<GameObject>();
@@ -83,6 +83,7 @@ public class ObjectPool : MonoBehaviour
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
+        PoolDictionary[obj.tag].Enqueue(obj);
         Pool pool = pools.Find(x => x.tag == obj.tag);
         pool.count--;
     }
