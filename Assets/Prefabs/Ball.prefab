@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7957087754937767663}
   - component: {fileID: 5888414878244814736}
   - component: {fileID: 1409353637700062916}
-  - component: {fileID: 7744013473684157446}
   - component: {fileID: 856465295160354646}
+  - component: {fileID: 4054527455258007860}
   m_Layer: 7
   m_Name: Ball
   m_TagString: Ball
@@ -150,19 +150,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7744013473684157446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143664999338759014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a57ea4340658e4ab6c7d4a592119b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultSpeed: 5
 --- !u!96 &856465295160354646
 TrailRenderer:
   serializedVersion: 3
@@ -312,3 +299,16 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &4054527455258007860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143664999338759014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a57ea4340658e4ab6c7d4a592119b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInit: 0

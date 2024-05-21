@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
 
 public class BlockHandler : MonoBehaviour
 {
@@ -12,24 +14,32 @@ public class BlockHandler : MonoBehaviour
     {
         
     }
+
     public void BlockSpriteChange()
     {
         Sprite[] slicedSprites = Resources.LoadAll<Sprite>("Breakout-001-C");
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = slicedSprites[blockSO.blockSpriteColor];
     }
+
     public void SetBlockSO(BlockSO newBlockSO)
     {
         blockSO = newBlockSO;
         currentHp = blockSO.hp;
         BlockSpriteChange();
     }
+
     public void TakeDamage(int damage)
     {
+        if (blockSO.isInvincible) return;
         currentHp -= damage;
-        if (currentHp <= 0)
-        {
-            Destroy(gameObject);
+        if (currentHp == 0)
+        {            
+            Destroy(gameObject);        
         }
+    }
+    private void OnDestroy()
+    {
+        GameManager.Instance.DestroyBlock(blockSO.score);
     }
 }
