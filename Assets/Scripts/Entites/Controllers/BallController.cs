@@ -5,28 +5,40 @@ using static Unity.Collections.AllocatorManager;
 
 public class BallController : MonoBehaviour
 {
-    public float defaultSpeed;
+    private float defaultSpeed = 2f;
     private Rigidbody2D rigidbody;
-    private TrailRenderer trailRenderer;
+    private TrailRenderer trailRenderer;    
 
 
     // 공 Copy에서 사용할 각도
     private float minRotationAngle = 30f; 
     private float maxRotationAngle = 50f;
+    
+    private void OnEnable()
+    {
+        GameManager.Instance.OnCopyBallEvent += Copy;
+        GameManager.Instance.OnFinishStageEvent += Destroyed;
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.OnCopyBallEvent -= Copy;
+        GameManager.Instance.OnFinishStageEvent -= Destroyed;
+    }
 
     private void Awake()
-    {
+    {  
         rigidbody = GetComponent<Rigidbody2D>();
-        trailRenderer = GetComponent<TrailRenderer>();        
+        trailRenderer = GetComponent<TrailRenderer>();       
     }
 
     private void FixedUpdate()
     {
-        rigidbody.velocity = new Vector2(Mathf.Sign(rigidbody.velocity.x) * Mathf.Abs(defaultSpeed), rigidbody.velocity.y);
+        
     }
 
     public void Copy()
     {
+        if (!gameObject.activeSelf) return;
         GameObject rightBall = GameManager.Instance.CreateBalls();
         GameObject leftBall = GameManager.Instance.CreateBalls();
 
@@ -50,7 +62,7 @@ public class BallController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision) //TODO ::  switch문으로 고치기
     {
         string collisionLayerName = LayerMask.LayerToName(collision.gameObject.layer);
-
+        
         switch (collisionLayerName)
         {
             case "Player":
@@ -60,7 +72,7 @@ public class BallController : MonoBehaviour
                 ProcessBlockCollision(collision);
                 break;
             case "Bottom":
-                Destroyed();
+                //Destroyed();
                 break;
             default:
                 break;
@@ -93,11 +105,11 @@ public class BallController : MonoBehaviour
         }
     }
     public void Destroyed()
-    {
+    {        
+        if (!gameObject.activeSelf) return;
         GameManager.Instance.ObjectPool.ReturnObject(this.gameObject);
         GameManager.Instance.DestroyBalls();
     }
-
     private bool IsLayerMatched(int value, int layer)
     {
         return value == (value | 1 << layer);

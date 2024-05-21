@@ -1,5 +1,5 @@
 {
-    "name": "Player1",
+    "name": "Player",
     "maps": [
         {
             "name": "Player1",
@@ -20,7 +20,7 @@
                     "id": "bd723573-8418-403e-9585-7eb49246520f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
