@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StageController : MonoBehaviour
@@ -7,6 +8,7 @@ public class StageController : MonoBehaviour
     StageDataManager stageDataManager;
     BlockDataManager blockDataManager;
     public GameObject block;
+    public GameObject bossBlock;
 
     int stageNum;
 
@@ -16,6 +18,10 @@ public class StageController : MonoBehaviour
         //blockDataManager = BlockDataManager.GetInstance();        
     }
 
+    public void BossStage()
+    {
+        Instantiate(bossBlock);
+    }
 
     public void StartStage(int stageNum) //현재 스테이지의 맵 데이터를 가져와서 블록을 생성
     {

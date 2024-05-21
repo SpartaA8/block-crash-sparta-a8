@@ -9,7 +9,7 @@ public class PaddleMovement : MonoBehaviour
     private Rigidbody2D rigidbody;    
 
     private float size;
-    private float speed = 2f;    
+    private float speed = 8f;    
     private Vector3 direction;
 
     private void Awake()
