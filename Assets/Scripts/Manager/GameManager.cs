@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private StageController stageController;
 
     public event Action OnCopyBallEvent;
+    public event Action<bool> OnChangeLifeEvent;
 
     private int highScore;
     private int currentScore;
@@ -43,8 +44,9 @@ public class GameManager : MonoBehaviour
 
     private void StartStage(int stageLevel)
     {
-        life = 2;
+        for (int i = 0; i < 2; i++) AddLife();
         ballCount = 0;
+        currentScore = 0;
         ResetPlayerPos();                
         stageController.StartStage(stageLevel);        
     }
@@ -62,14 +64,34 @@ public class GameManager : MonoBehaviour
 
     // 블록 파괴 시 
     public void DestroyBlock(int score)
-    {   
+    {
+        currentScore += score;
+        if(currentScore > highScore) highScore = currentScore;
+
         if (--blockCount == 0) StartStage(++stageLevel);
+    }
+
+    public void CallChangeLifeEvent(bool isAdd)
+    {
+        OnChangeLifeEvent?.Invoke(isAdd);
     }
 
     // 목숨 추가 아이템
     public void AddLife()
     {
         life++;
+        CallChangeLifeEvent(true);
+    }
+
+    private void ReduceLife()
+    {        
+        if (life-- > 0)
+        {
+            ResetPlayerPos();
+            CallChangeLifeEvent(false);
+            return;
+        }
+        GameOver();
     }
 
     // 볼 복사 아이템
@@ -97,15 +119,11 @@ public class GameManager : MonoBehaviour
     public void DestroyBalls()
     {
         if (--ballCount == 0) 
-            GameOver();
-    }
+            ReduceLife();
+    }    
 
     private void GameOver()
     {
-        if(life-- > 0)
-        {
-            ResetPlayerPos();
-            return;
-        }
-    }    
+        
+    }
 }
