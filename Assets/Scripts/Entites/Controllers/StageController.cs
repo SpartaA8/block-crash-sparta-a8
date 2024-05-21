@@ -10,7 +10,7 @@ public class StageController : MonoBehaviour
     public GameObject block;
     public GameObject bossBlock;
 
-    int stageNum;
+    private int blockCount;
 
     private void Awake() //초기설정, 스테이지1 불러옴
     {
@@ -23,8 +23,9 @@ public class StageController : MonoBehaviour
         Instantiate(bossBlock);
     }
 
-    public void StartStage(int stageNum) //현재 스테이지의 맵 데이터를 가져와서 블록을 생성
+    public int StartStage(int stageNum) //현재 스테이지의 맵 데이터를 가져와서 블록을 생성
     {
+        blockCount = 0;
         int[,] currentMap = StageDataManager.GetInstance().GetStageMaps(stageNum);
 
         for (int i = 0; i < currentMap.GetLength(0); i++)
@@ -40,8 +41,10 @@ public class StageController : MonoBehaviour
                     GameObject newBlock = Instantiate(block, position, Quaternion.identity);
                     newBlock.transform.parent = transform;
                     newBlock.GetComponent<BlockHandler>().SetBlockSO(blockData);
+                    if (!blockData.isInvincible) blockCount++;
                 }
             }
         }
+        return blockCount;  
     }
 }
