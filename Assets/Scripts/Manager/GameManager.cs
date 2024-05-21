@@ -39,8 +39,7 @@ public class GameManager : MonoBehaviour
     {
         ObjectPool = GetComponent<ObjectPool>();
         players[0] = GameObject.Find("Player").transform.GetChild(0).gameObject;
-        players[1] = GameObject.Find("Player").transform.GetChild(1).gameObject;
-        players[1].SetActive(isMulti);
+        players[1] = GameObject.Find("Player").transform.GetChild(1).gameObject;        
         stageController = GameObject.Find("Stage").gameObject.GetComponent<StageController>();        
         InitGame();
     }    
@@ -48,6 +47,7 @@ public class GameManager : MonoBehaviour
     // 게임 씬 처음으로 넘어왔을때 실행할 함수
     public void InitGame()
     {
+        players[1].SetActive(isMulti);
         StartStage(stageLevel);
         life = 0;
         for (int i = 0; i < 2; i++) AddLife();
@@ -70,14 +70,14 @@ public class GameManager : MonoBehaviour
 
     private void ResetPlayerPos()
     {  
-        Vector3 startPos = isMulti ? Vector3.left * 2 : Vector3.zero;
-        startPos += Vector3.down * 4.2f;
-        players[0].transform.position = startPos;
-        if (isMulti) players[1].transform.position = -startPos;
+        Vector3 posX = isMulti ? Vector3.left * 2 : Vector3.zero;
+        Vector3 posY = Vector3.down * 4.2f;
+        players[0].transform.position = posX + posY;
+        if (isMulti) players[1].transform.position = -posX + posY;
 
         GameObject obj = CreateBalls();
-        obj.GetComponent<Rigidbody2D>().velocity = (Vector3.down + Vector3.right) * 5f;
-        obj.transform.position = new Vector3(0, -4f, 0);
+        obj.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        players[0].GetComponent<PaddleMovement>().HoldBall(obj, posX.x);
     }
 
     // 블록 파괴 시 

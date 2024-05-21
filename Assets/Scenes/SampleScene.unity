@@ -776,8 +776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7aebbaee4ebc445a5db12ae10b0aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockCount: 0
-  ballCount: 0
 --- !u!114 &1513072399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,6 +840,7 @@ GameObject:
   - component: {fileID: 1852729071}
   - component: {fileID: 1852729072}
   - component: {fileID: 1852729073}
+  - component: {fileID: 1852729074}
   m_Layer: 8
   m_Name: Player1
   m_TagString: Player
@@ -1042,6 +1041,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a960b93f8ec5a24a869cf8455fc1d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!255 &1852729074
+FixedJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852729066}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 1
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: -4.2}
+  m_DampingRatio: 0
+  m_Frequency: 0
 --- !u!1 &1970330923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,6 +1205,7 @@ GameObject:
   - component: {fileID: 2063890651}
   - component: {fileID: 2063890650}
   - component: {fileID: 2063890649}
+  - component: {fileID: 2063890656}
   m_Layer: 8
   m_Name: Player2
   m_TagString: Player
@@ -1387,6 +1406,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 406080721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!255 &2063890656
+FixedJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063890648}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 1
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_DampingRatio: 0
+  m_Frequency: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -4,16 +4,17 @@ using UnityEngine;
 using static Unity.Collections.AllocatorManager;
 
 public class BallController : MonoBehaviour
-{
-    private float defaultSpeed = 2f;
+{    
     private Rigidbody2D rigidbody;
     private TrailRenderer trailRenderer;    
-
 
     // 공 Copy에서 사용할 각도
     private float minRotationAngle = 30f; 
     private float maxRotationAngle = 50f;
-    
+
+    private float defaultSpeed = 5f;
+    private bool isCatched = false;    
+
     private void OnEnable()
     {
         GameManager.Instance.OnCopyBallEvent += Copy;
@@ -39,6 +40,8 @@ public class BallController : MonoBehaviour
     public void Copy()
     {
         if (!gameObject.activeSelf) return;
+        if (isCatched) return;
+
         GameObject rightBall = GameManager.Instance.CreateBalls();
         GameObject leftBall = GameManager.Instance.CreateBalls();
 
@@ -57,9 +60,22 @@ public class BallController : MonoBehaviour
         rightRb.velocity = rightDirection * currentVelocity.magnitude;
         leftRb.velocity = leftDirection * currentVelocity.magnitude;
     }
+
+    public void Catched()
+    {
+        isCatched = true;        
+    }
+
+    public void Shoot(float posX)
+    {
+        float rotationAngle = Random.Range(minRotationAngle, maxRotationAngle);
+        Vector2 direction = Quaternion.Euler(0, 0, rotationAngle * posX) * Vector2.up;
+        rigidbody.velocity = direction.normalized * defaultSpeed;
+        isCatched = false;
+    }
  
 
-    void OnCollisionEnter2D(Collision2D collision) //TODO ::  switch문으로 고치기
+    private void OnCollisionEnter2D(Collision2D collision) //TODO ::  switch문으로 고치기
     {
         string collisionLayerName = LayerMask.LayerToName(collision.gameObject.layer);
         
