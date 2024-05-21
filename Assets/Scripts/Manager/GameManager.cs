@@ -44,6 +44,13 @@ public class GameManager : MonoBehaviour
 
     private void StartStage(int stageLevel)
     {
+        ResetPlayerPos();
+        GameObject obj = CreateBalls();
+        //obj.transform.parent = players[0].transform;
+        obj.transform.position = new Vector3(0, -3.2f, 0);
+        if (stageLevel < 5) stageController.StartStage(stageLevel);
+        else stageController.BossStage();
+        obj.GetComponent<Rigidbody2D>().velocity = Vector3.down * 5f;
         for (int i = 0; i < 2; i++) AddLife();
         ballCount = 0;
         currentScore = 0;
