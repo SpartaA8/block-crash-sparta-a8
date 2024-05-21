@@ -65,6 +65,7 @@ public class BallController : MonoBehaviour
                 break;
             case "Bottom":
                 //Destroyed();
+                break;
             case "Wall":
                 ObjectCollision(collision);
                 break;
@@ -120,4 +121,5 @@ public class BallController : MonoBehaviour
     {
         return value == (value | 1 << layer);
     }
+
 }
