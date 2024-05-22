@@ -11,8 +11,8 @@ public class PaddleMovement : MonoBehaviour
     private BoxCollider2D collider;
     private FixedJoint2D joint;
 
-    private float size;
-    private float speed = 5f;    
+    private float sizeRate = 0.25f;
+    private float speed = 4f;    
     private Vector3 direction;
     private bool isHold;
 
@@ -32,22 +32,27 @@ public class PaddleMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidbody.velocity = direction * speed;
-        Debug.Log("update");
+        rigidbody.velocity = direction * speed;        
+    }
+
+    public void ResetState(Vector3 position)
+    {
+        transform.position = position;
+        speed = 4f;
+        Vector3 scale = transform.localScale;
+        transform.localScale = new Vector3(1.25f, 0.25f, 0);
     }
 
     public void Move(float input)
     {
         if (input == 0)
         {
-            rigidbody.constraints |= RigidbodyConstraints2D.FreezePositionX;
-            Debug.Log("stop");
+            rigidbody.constraints |= RigidbodyConstraints2D.FreezePositionX;            
         }
             
         else
         {
-            rigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
-            Debug.Log("move");
+            rigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionX;            
         }
             
         direction = new Vector2(input, 0);        
@@ -126,19 +131,38 @@ public class PaddleMovement : MonoBehaviour
     }
 
     public void ChangeSize()
-    {
-        //실제로 스케일에서 적용이 안됨
-        float randomsize = Random.Range(-1f, 2f);
-
-        size += randomsize;
+    {        
+        int randomsize = Random.Range(0, 1);
+    
+        if(randomsize == 0)
+        {
+            if (transform.localScale.x == 1) return;
+            Vector3 scale = transform.localScale;
+            transform.localScale = scale + Vector3.left * sizeRate;
+        }
+        else
+        {
+            if (transform.localScale.x == 2) return;
+            Vector3 scale = transform.localScale;
+            transform.localScale = scale + Vector3.right * sizeRate;
+        }
 
     }
 
     public void ChangeSpeed()
     {
-        float changespeed = Random.Range(-2f, 3f);
+        int randomsize = Random.Range(0, 1);
 
-        speed += changespeed;
+        if (randomsize == 0)
+        {
+            if (speed == 3) return;
+            speed -= 1f;
+        }
+        else
+        {
+            if (speed == 7) return;
+            speed += 1f;
+        }
     }
 }
 

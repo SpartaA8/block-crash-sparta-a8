@@ -72,8 +72,8 @@ public class GameManager : MonoBehaviour
     {  
         Vector3 posX = isMulti ? Vector3.left * 2 : Vector3.zero;
         Vector3 posY = Vector3.down * 4.2f;
-        players[0].transform.position = posX + posY;
-        if (isMulti) players[1].transform.position = -posX + posY;
+        players[0].GetComponent<PaddleMovement>().ResetState(posX + posY);
+        if (isMulti) players[1].GetComponent<PaddleMovement>().ResetState(-posX + posY);
 
         GameObject obj = CreateBalls();
         obj.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
