@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4796669658787456404}
   - component: {fileID: 4867126746465662395}
   - component: {fileID: 6103639674392327157}
-  - component: {fileID: 2132516461759959277}
+  - component: {fileID: 9090909372923069483}
   m_Layer: 12
   m_Name: MiniSpear
   m_TagString: Spear
@@ -149,7 +149,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0010541368, y: 0.0052756337}
   m_Size: {x: 0.11395179, y: 3.0211358}
   m_Direction: 0
---- !u!114 &2132516461759959277
+--- !u!114 &9090909372923069483
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 4377183355657475949}
   - component: {fileID: 7286894776841084607}
   - component: {fileID: 5909808495609618691}
-  - component: {fileID: 4088109584067361977}
+  - component: {fileID: 7488685067455275121}
   m_Layer: 12
   m_Name: Spear (2)
   m_TagString: Spear
@@ -737,7 +737,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0017595962, y: 0}
   m_Size: {x: 0.110466346, y: 3}
   m_Direction: 0
---- !u!114 &4088109584067361977
+--- !u!114 &7488685067455275121
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -746,7 +746,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1420040135045563002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c186803ce7d249468a033a8cec3ab0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 33c3d031bb001d941a008575f55a38e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1451284636124538939
@@ -1886,7 +1886,7 @@ GameObject:
   - component: {fileID: 3578181351179041143}
   - component: {fileID: 3460668199562429844}
   - component: {fileID: 474490718370607822}
-  - component: {fileID: 5125129721344073892}
+  - component: {fileID: 389551944643205567}
   m_Layer: 12
   m_Name: Spear (1)
   m_TagString: Spear
@@ -2023,7 +2023,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0019177683, y: 0}
   m_Size: {x: 0.11078269, y: 3}
   m_Direction: 0
---- !u!114 &5125129721344073892
+--- !u!114 &389551944643205567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2032,7 +2032,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5872227393660420273}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c186803ce7d249468a033a8cec3ab0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 33c3d031bb001d941a008575f55a38e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6185745525477758820
@@ -2797,7 +2797,7 @@ GameObject:
   - component: {fileID: 295805093044421555}
   - component: {fileID: 6054387692874331936}
   - component: {fileID: 5480067958458573515}
-  - component: {fileID: 1018149188139431850}
+  - component: {fileID: 6527958410434418138}
   m_Layer: 12
   m_Name: Spear (3)
   m_TagString: Spear
@@ -2934,7 +2934,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0013363734, y: 0}
   m_Size: {x: 0.111849174, y: 3}
   m_Direction: 0
---- !u!114 &1018149188139431850
+--- !u!114 &6527958410434418138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2943,7 +2943,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7655800457803002849}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c186803ce7d249468a033a8cec3ab0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 33c3d031bb001d941a008575f55a38e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7864684837247987113
@@ -3210,7 +3210,7 @@ GameObject:
   - component: {fileID: 1306245423878373741}
   - component: {fileID: 6506804496686436946}
   - component: {fileID: 2076842941930322787}
-  - component: {fileID: 3366526177690036040}
+  - component: {fileID: 5770997235556602104}
   m_Layer: 12
   m_Name: Spear
   m_TagString: Spear
@@ -3347,7 +3347,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0023650676, y: 0}
   m_Size: {x: 0.11072251, y: 3}
   m_Direction: 0
---- !u!114 &3366526177690036040
+--- !u!114 &5770997235556602104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3356,7 +3356,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8632887850921544058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c186803ce7d249468a033a8cec3ab0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 33c3d031bb001d941a008575f55a38e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8678050071437923532

@@ -10,13 +10,5 @@ public class SpearHandler : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
-        {
-            Destroy(gameObject);
-        }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Bottom"))
-        {
-            Destroy(gameObject);
-        }
     }
 }
