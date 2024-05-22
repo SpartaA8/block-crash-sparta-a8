@@ -18,7 +18,7 @@ public class ItemController : MonoBehaviour
     {
         if (collision.gameObject.layer == 11)
         {
-            Destroy(collision.gameObject);
+            Destroy(gameObject);
         }
     }
 }

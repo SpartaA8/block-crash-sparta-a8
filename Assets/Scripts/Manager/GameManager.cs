@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         players[1] = GameObject.Find("Player").transform.GetChild(1).gameObject;
         players[1].SetActive(isMulti);
         stageController = GameObject.Find("Stage").gameObject.GetComponent<StageController>();        
-        StartStage(stageLevel);
+        StartStage(5);
         life = 0;
         for (int i = 0; i < 2; i++) AddLife();
     }    
@@ -139,6 +139,9 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        
+        if (life <= 0)
+        {
+            GameOverManager.Instance.MakeGameOverUI();
+        }
     }
 }

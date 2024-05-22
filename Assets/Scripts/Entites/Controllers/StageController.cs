@@ -38,7 +38,7 @@ public class StageController : MonoBehaviour
 
                 if (blockData != null)
                 {
-                    Vector3 position = new Vector3(j * 0.72f + -3.595f, -i * 0.39f + 3.45f, 0);
+                    Vector3 position = new Vector3(j * 0.72f + -4.95f, -i * 0.39f + 3.45f, 0);
                     GameObject newBlock = Instantiate(block, position, Quaternion.identity);
                     newBlock.transform.parent = transform;
                     newBlock.GetComponent<BlockHandler>().SetBlockSO(blockData);

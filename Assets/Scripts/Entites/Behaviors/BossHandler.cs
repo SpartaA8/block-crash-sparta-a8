@@ -25,6 +25,7 @@ public class BossHandler : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentBossHp -= damage;
+        Debug.Log(damage);
 
         animator.SetLayerWeight(hitLayerIndex, 1);
         animator.SetTrigger("BossHit");
@@ -37,6 +38,7 @@ public class BossHandler : MonoBehaviour
         {
             BossPhase2?.Invoke();
         }
+        Debug.Log(currentBossHp);
     }
 
     private void OnDestroy()

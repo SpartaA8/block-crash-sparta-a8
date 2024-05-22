@@ -5,14 +5,9 @@ using UnityEngine.UI;
 
 public class Button : MonoBehaviour
 {
-    private Setting setting;
     public GameObject closeGameObject;
     public GameObject openGameObject;
 
-    private void Awake()
-    {
-        setting = openGameObject.GetComponent<Setting>();
-    }
 
     public void GameOffBtn()
     {
@@ -37,4 +32,18 @@ public class Button : MonoBehaviour
         openGameObject.SetActive(true);
     }
 
+    public void CloseBtn()
+    {
+        DestroyObject(closeGameObject);
+    }
+
+    public void MakePause()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void ResetPause()
+    {
+        Time.timeScale = 1f;
+    }
 }
