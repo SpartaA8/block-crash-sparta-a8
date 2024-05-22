@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private bool isMulti = false;
+    private bool isMulti;
     public bool IsMulti
     {
         get
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);            
+            IsMulti = false;
         }
     }
 }
