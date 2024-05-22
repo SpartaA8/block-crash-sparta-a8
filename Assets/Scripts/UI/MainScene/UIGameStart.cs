@@ -15,17 +15,17 @@ public class UIGameStart : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.OnFinishStageEvent += ChangeScoreUI;
+        MainSceneManager.Instance.OnFinishStageEvent += ChangeScoreUI;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.OnFinishStageEvent -= ChangeScoreUI;
+        MainSceneManager.Instance.OnFinishStageEvent -= ChangeScoreUI;
     }
 
     private void ChangeScoreUI()
     {
-        int num = GameManager.Instance.StageLevel;
+        int num = MainSceneManager.Instance.StageLevel;
         if (num == 5) stageNumText.text = "Boss Stage" + "\nGame Start";
         else stageNumText.text = "Stage " + num.ToString() + "\nGame Start";
     }

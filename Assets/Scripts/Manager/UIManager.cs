@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,17 +19,22 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Instance = this;            
+            if (SceneManager.GetActiveScene().name != "MainScene") return;
             UIList = new List<GameObject>();
             parent = GameObject.Find("UI");
             foreach (GameObject go in UIPrefabs)
-            {                
+            {
                 GameObject obj = Instantiate(go, parent.transform);
                 obj.name = go.name;
                 UIList.Add(obj);
             }
         }
+    }
+
+    public void Start()
+    {
+        
     }
 
     public void SetActiveUI(string name, bool active)

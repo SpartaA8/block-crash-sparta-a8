@@ -12,7 +12,7 @@ public class BlockHandler : MonoBehaviour
 
     protected virtual void Awake()
     {
-        GameManager.Instance.OnFinishStageEvent += DestroyBlock;
+        MainSceneManager.Instance.OnFinishStageEvent += DestroyBlock;
     }
 
     public void BlockSpriteChange()
@@ -39,7 +39,7 @@ public class BlockHandler : MonoBehaviour
             {
                 Destroy(gameObject);                
                 ItemDataManager.Instance.SpawnItem(transform.position, blockSO.hp);
-                GameManager.Instance.DestroyBlock(blockSO.score);
+                MainSceneManager.Instance.DestroyBlock(blockSO.score);
             }
         }
     }
@@ -51,6 +51,6 @@ public class BlockHandler : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        GameManager.Instance.OnFinishStageEvent -= DestroyBlock;
+        MainSceneManager.Instance.OnFinishStageEvent -= DestroyBlock;
     }
 }

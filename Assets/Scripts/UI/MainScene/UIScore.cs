@@ -17,17 +17,17 @@ public class UIScore : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.OnChangeScoreEvent += ChangeScoreUI;        
+        MainSceneManager.Instance.OnChangeScoreEvent += ChangeScoreUI;        
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.OnChangeScoreEvent -= ChangeScoreUI;        
+        MainSceneManager.Instance.OnChangeScoreEvent -= ChangeScoreUI;        
     }
 
     private void ChangeScoreUI()
     {
-        highScoreText.text = GameManager.Instance.HighScore.ToString();
-        currentScoreText.text = GameManager.Instance.CurrentScore.ToString();        
+        highScoreText.text = MainSceneManager.Instance.HighScore.ToString();
+        currentScoreText.text = MainSceneManager.Instance.CurrentScore.ToString();        
     }
 }

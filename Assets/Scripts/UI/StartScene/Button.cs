@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Button : MonoBehaviour
@@ -11,7 +12,12 @@ public class Button : MonoBehaviour
 
     private void Awake()
     {
-        setting = openGameObject.GetComponent<Setting>();
+        
+    }
+
+    private void Start()
+    {
+        //setting = openGameObject.GetComponent<Setting>();
     }
 
     public void GameOffBtn()
@@ -26,10 +32,10 @@ public class Button : MonoBehaviour
     {
         DestroyObject(closeGameObject);
         closeGameObject.SetActive(false);
+        if (openGameObject == null) return;
         Instantiate(openGameObject);
         openGameObject.SetActive(true);
-    }
-    
+    }    
 
     public void OpenBtn()
     {
@@ -37,4 +43,9 @@ public class Button : MonoBehaviour
         openGameObject.SetActive(true);
     }
 
+    public void GameStartBtn(bool isMulti)
+    {
+        GameManager.Instance.IsMulti = isMulti;
+        SceneManager.LoadScene("MainScene");        
+    }
 }

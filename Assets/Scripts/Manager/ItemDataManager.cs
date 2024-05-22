@@ -24,8 +24,7 @@ public class ItemDataManager : MonoBehaviour
         }
         else
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Instance = this;            
             SetItemDictionary();
         }
     }

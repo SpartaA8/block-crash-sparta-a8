@@ -17,13 +17,13 @@ public class BallController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.OnCopyBallEvent += Copy;
-        GameManager.Instance.OnFinishStageEvent += Destroyed;
+        MainSceneManager.Instance.OnCopyBallEvent += Copy;
+        MainSceneManager.Instance.OnFinishStageEvent += Destroyed;
     }
     private void OnDisable()
     {
-        GameManager.Instance.OnCopyBallEvent -= Copy;
-        GameManager.Instance.OnFinishStageEvent -= Destroyed;
+        MainSceneManager.Instance.OnCopyBallEvent -= Copy;
+        MainSceneManager.Instance.OnFinishStageEvent -= Destroyed;
     }
 
     private void Awake()
@@ -41,7 +41,7 @@ public class BallController : MonoBehaviour
 
     public void RotateAngle(float rotationAngle)
     {
-        GameObject ball = GameManager.Instance.CreateBalls();
+        GameObject ball = MainSceneManager.Instance.CreateBalls();
         if (ball == null)
         {
             return;
@@ -156,7 +156,7 @@ public class BallController : MonoBehaviour
     public void Destroyed()
     {        
         if (!gameObject.activeSelf) return;
-        GameManager.Instance.ObjectPool.ReturnObject(this.gameObject);
-        GameManager.Instance.DestroyBalls();
+        MainSceneManager.Instance.ObjectPool.ReturnObject(this.gameObject);
+        MainSceneManager.Instance.DestroyBalls();
     }
 }

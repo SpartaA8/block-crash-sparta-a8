@@ -6,12 +6,12 @@ public class ItemController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.OnFinishStageEvent += ItemDestroy;
+        MainSceneManager.Instance.OnFinishStageEvent += ItemDestroy;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.OnFinishStageEvent -= ItemDestroy;
+        MainSceneManager.Instance.OnFinishStageEvent -= ItemDestroy;
     }
 
     public void SetItemSO(ItemSO itemSO)

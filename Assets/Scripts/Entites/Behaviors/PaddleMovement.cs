@@ -111,7 +111,7 @@ public class PaddleMovement : MonoBehaviour
         }
         else if(collision.gameObject.layer == 12)
         {
-            GameManager.Instance.ReduceLife();
+            MainSceneManager.Instance.ReduceLife();
         }
     }
 
@@ -127,11 +127,11 @@ public class PaddleMovement : MonoBehaviour
         }
         else if (itemType == EItemType.LIFE)
         {
-            GameManager.Instance.AddLife();
+            MainSceneManager.Instance.AddLife();
         }
         else if (itemType == EItemType.COPY)
         {
-            GameManager.Instance.Copyballs();
+            MainSceneManager.Instance.Copyballs();
         }
         AudioManager.Instance.PlayClip("GetItem");
     }
