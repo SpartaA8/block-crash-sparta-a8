@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockSO: {fileID: 0}
+  itemPrefab: {fileID: 2920494751004701249, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
 --- !u!61 &-2311967896496587296
 BoxCollider2D:
   m_ObjectHideFlags: 0

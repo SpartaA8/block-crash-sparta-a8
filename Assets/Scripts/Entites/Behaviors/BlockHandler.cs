@@ -31,13 +31,20 @@ public class BlockHandler : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (blockSO.isInvincible) return;
-        currentHp -= damage;
-        if (currentHp == 0)
-        {            
-            Destroy(gameObject);        
+        
+        if (!blockSO.isInvincible)
+        {
+            currentHp -= damage;
+            if (currentHp <= 0)
+            {
+                Destroy(gameObject);
+                Debug.Log("SpawnItem 메서드 호출 시도");
+                ItemDataManager.Instance.SpawnItem(transform.position, blockSO.hp);
+            }
         }
+        
     }
+    
     private void OnDestroy()
     {
         GameManager.Instance.DestroyBlock(blockSO.score);

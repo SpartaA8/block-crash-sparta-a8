@@ -1,24 +1,46 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BossHandler : MonoBehaviour
 {
-    [SerializeField] private BlockSO blockSO;
-    private int currentHp;
+    private Animator animator;
+    public event Action BossPhase2;
+    [SerializeField] private BlockSO bossBlockSO;
+    private int currentBossHp;
+    private int hitLayerIndex;
 
-    public void SetBossSO(BlockSO newBlockSO)
+    private void Awake()
     {
-        blockSO = newBlockSO;
-        currentHp = blockSO.hp;
+        animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        hitLayerIndex = animator.GetLayerIndex("Hit Layer");
+        currentBossHp = bossBlockSO.hp;
     }
 
     public void TakeDamage(int damage)
     {
-        currentHp -= damage;
-        if (currentHp <= 0)
+        currentBossHp -= damage;
+
+        animator.SetLayerWeight(hitLayerIndex, 1);
+        animator.SetTrigger("BossHit");
+
+        if (currentBossHp == 0)
         {
             Destroy(gameObject);
         }
+        else if (currentBossHp == 50)
+        {
+            BossPhase2?.Invoke();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.DestroyBlock(bossBlockSO.score);
     }
 }

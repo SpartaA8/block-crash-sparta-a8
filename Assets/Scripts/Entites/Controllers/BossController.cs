@@ -5,53 +5,77 @@ using UnityEngine;
 public class BossController : MonoBehaviour
 {
     private Animator animator;
-
+    private int ChangeBossIndex;
+    private BossHandler bossHandler;
+    private Coroutine CurrentPattern;
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        bossHandler = GetComponent<BossHandler>();
+    }
 
     public void Start()
     {
-        animator = GetComponent<Animator>();
-        StartCoroutine(BossAttackRoutine());
-
+        
+        ChangeBossIndex = animator.GetLayerIndex("ChangeBoss Layer");
+        CurrentPattern = StartCoroutine(BossAttackPhase1());
+        bossHandler.BossPhase2 += BossChangePattern;
     }
 
-    private IEnumerator BossAttackRoutine()
+    private IEnumerator BossAttackPhase1()
     {
-        Debug.Log("애니메이션실행");
         while (true)
         {
+            yield return new WaitForSeconds(5f);
+
+            int randomValue = Random.Range(0, 4);
+            if (randomValue == 0)
+            {
+                animator.SetTrigger("Attack1");
+            }
+            else if (randomValue == 1)
+            {
+                animator.SetTrigger("Attack2");
+            }
+            else if (randomValue == 2)
+            {
+                animator.SetTrigger("Attack3");
+            }
+        }
+    }
+
+    private IEnumerator BossAttackPhase2()
+    {
+        animator.SetLayerWeight(ChangeBossIndex, 1);
+        animator.SetTrigger("ChangeBoss");
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(5f);
+        Time.timeScale = 1f;
+
+        while (true)
+        {
+
             yield return new WaitForSeconds(4f);
 
             int randomValue = Random.Range(0, 4);
             if (randomValue == 0)
             {
-                Debug.Log("어택1");
-                animator.SetTrigger("Attack1");
+                //animator.SetTrigger("nell");
             }
             else if (randomValue == 1)
             {
-                Debug.Log("어택2");
-                animator.SetTrigger("Attack2");
+                //animator.SetTrigger("");
             }
             else if (randomValue == 2)
             {
-                Debug.Log("어택3");
-                animator.SetTrigger("Attack3");
+                //animator.SetTrigger("");
             }
         }
     }
-    public void OnCollisionEnter2D(Collision2D collision)
+
+    private void BossChangePattern()
     {
-        // 충돌한 오브젝트가 공인지 확인
-        if (collision.gameObject.CompareTag("Ball"))
-        {
-            Debug.Log("히트");
-            animator.SetTrigger("BossHit");
-        }
-        // 플레이어와 충돌했는지 확인
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("플레이어킬");
-            Destroy(collision.gameObject); // 플레이어 오브젝트를 파괴
-        }
+        StopCoroutine(CurrentPattern);
+        CurrentPattern = StartCoroutine(BossAttackPhase2());
     }
 }
