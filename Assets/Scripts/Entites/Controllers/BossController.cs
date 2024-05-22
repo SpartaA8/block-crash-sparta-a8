@@ -50,14 +50,14 @@ public class BossController : MonoBehaviour
 
             yield return new WaitForSeconds(5f);
 
-            int randomValue = Random.Range(0, 0);
+            int randomValue = Random.Range(0, 2);
             if (randomValue == 0)
             {
                 HyukAttack();
             }
             else if (randomValue == 1)
             {
-
+                animator.SetTrigger("hyukAttack1");
             }
             else if (randomValue == 2)
             {
@@ -89,7 +89,7 @@ public class BossController : MonoBehaviour
                 float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 spear.transform.rotation = Quaternion.Euler(0f, 0f, rotZ - 90f);
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
 
                 Rigidbody2D rb = spear.GetComponent<Rigidbody2D>();
                 if (rb != null)
