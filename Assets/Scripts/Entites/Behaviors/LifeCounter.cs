@@ -12,8 +12,8 @@ public class LifeCounter : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnChangeLifeEvent += ChangeLifeCount;        
         lifeStack = new Stack<GameObject>();
+        MainSceneManager.Instance.OnChangeLifeEvent += ChangeLifeCount;               
     }
 
     private void ChangeLifeCount(bool isAdd)

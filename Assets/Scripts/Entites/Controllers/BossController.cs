@@ -48,7 +48,7 @@ public class BossController : MonoBehaviour
         while (true)
         {
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(7f);
 
             int randomValue = Random.Range(1, 101);
             if (randomValue <= 20)
