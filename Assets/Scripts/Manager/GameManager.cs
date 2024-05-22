@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     private int blockCount;
     private int ballCount;
     private int stageLevel = 1;
+    public int StageLevel { get => stageLevel; }
     private bool isMulti = false;
     private int life;
     private bool isClear;
@@ -102,9 +103,9 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.SetActiveUI("StageClearUI", true);
             yield return new WaitForSecondsRealtime(2f);
             UIManager.Instance.SetActiveUI("StageClearUI", false);
-        }
-        CallFinishStageEvent();
+        }        
         UIManager.Instance.SetActiveUI("GameStartUI", true);
+        CallFinishStageEvent();
         yield return new WaitForSecondsRealtime(2f);
         UIManager.Instance.SetActiveUI("GameStartUI", false);
         Time.timeScale = 1f;                
