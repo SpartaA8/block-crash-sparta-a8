@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,14 +14,40 @@ public class GameManager : MonoBehaviour
 
     private GameObject[] players = new GameObject[2];
     private StageController stageController;
+    private GameObject ScoreUI;
 
     public event Action OnCopyBallEvent;
     public event Action OnFinishStageEvent;
     public event Action<bool> OnChangeLifeEvent;
+    public event Action OnChangeScoreEvent;
     
 
     private int highScore;
+    public int HighScore
+    {
+        get
+        {
+            return highScore;
+        }
+        private set
+        {
+            highScore = value;
+            CallChangeScoreEvent();
+        }
+    }
     private int currentScore;
+    public int CurrentScore 
+    {
+        get
+        {
+            return currentScore;
+        } 
+        private set
+        {
+            currentScore = value;
+            CallChangeScoreEvent();
+        }
+    }
     private int blockCount;
     private int ballCount;
     private int stageLevel = 1;
@@ -30,9 +58,16 @@ public class GameManager : MonoBehaviour
     public ObjectPool ObjectPool { get; private set; }
 
     private void Awake()
-    {        
-        if (Instance != null) Destroy(gameObject);
-        Instance = this;        
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);            
+        }        
     }
 
     private void Start()
@@ -40,31 +75,41 @@ public class GameManager : MonoBehaviour
         ObjectPool = GetComponent<ObjectPool>();
         players[0] = GameObject.Find("Player").transform.GetChild(0).gameObject;
         players[1] = GameObject.Find("Player").transform.GetChild(1).gameObject;        
-        stageController = GameObject.Find("Stage").gameObject.GetComponent<StageController>();        
+        stageController = GameObject.Find("Stage").gameObject.GetComponent<StageController>();
+        UIManager.Instance.SetActiveUI("ScoreUI", true);
+
         InitGame();
-    }    
+    }        
     
     // 게임 씬 처음으로 넘어왔을때 실행할 함수
     public void InitGame()
-    {
-        players[1].SetActive(isMulti);
-        StartCoroutine(StartStage(stageLevel));
+    {        
+        players[1].SetActive(isMulti);        
+        StartCoroutine(StartStage(stageLevel));       
         life = 0;
+        CurrentScore = 0;
+        HighScore = 0;
         for (int i = 0; i < 2; i++) AddLife();
+        HighScore = RankBoardManager.Instance.GetHighScore();        
     }
 
     private IEnumerator StartStage(int stageLevel)
     {
+        
+        Time.timeScale = 0f;
         if(stageLevel > 1)
         {
-            Time.timeScale = 0f;
+            UIManager.Instance.SetActiveUI("StageClearUI", true);
             yield return new WaitForSecondsRealtime(2f);
-            Time.timeScale = 1f;
-        }       
-        
+            UIManager.Instance.SetActiveUI("StageClearUI", false);
+        }
         CallFinishStageEvent();
-        ballCount = 0;
-        currentScore = 0;
+        UIManager.Instance.SetActiveUI("GameStartUI", true);
+        yield return new WaitForSecondsRealtime(2f);
+        UIManager.Instance.SetActiveUI("GameStartUI", false);
+        Time.timeScale = 1f;                
+        
+        ballCount = 0;        
         isClear = false;
         blockCount = stageController.StartStage(stageLevel);        
 
@@ -91,8 +136,8 @@ public class GameManager : MonoBehaviour
     // 블록 파괴 시 
     public void DestroyBlock(int score)
     {
-        currentScore += score;
-        if(currentScore > highScore) highScore = currentScore;
+        CurrentScore += score;
+        if(CurrentScore > HighScore) HighScore = CurrentScore;
 
         if (--blockCount == 0)
         {
@@ -100,6 +145,11 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(StartStage(++stageLevel));
         }             
+    }
+
+    private void CallChangeScoreEvent()
+    {        
+        OnChangeScoreEvent?.Invoke();
     }
 
     public void CallChangeLifeEvent(bool isAdd)
@@ -124,7 +174,7 @@ public class GameManager : MonoBehaviour
             CallChangeLifeEvent(false);
             return;
         }
-        GameOver();
+        StartCoroutine(GameOver());
     }
 
     // 볼 복사 아이템
@@ -153,8 +203,14 @@ public class GameManager : MonoBehaviour
             ReduceLife();
     }    
 
-    private void GameOver()
+    private IEnumerator GameOver()
     {
-        
+        // 시작메뉴 씬으로 이동 및 랭킹진입시 이름입력구현 필요
+        Time.timeScale = 0f;
+        UIManager.Instance.SetActiveUI("GameOverUI", true);
+        yield return new WaitForSecondsRealtime(2f);
+        UIManager.Instance.SetActiveUI("GameOverUI", false);
+        Time.timeScale = 1f;
+        StartCoroutine(StartStage(1));
     }
 }

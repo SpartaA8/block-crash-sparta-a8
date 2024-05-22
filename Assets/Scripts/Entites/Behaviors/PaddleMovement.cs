@@ -107,11 +107,7 @@ public class PaddleMovement : MonoBehaviour
                 ApplyItem(collisionController.SoItem.itemType);
                 // ¾ÆÀÌÅÛ ¸ÔÀº ÈÄ ÆÄ±«
                 Destroy(collision.gameObject);
-            }
-            else
-            {
-                Debug.LogWarning("ItemController not found on the collided object.");
-            }
+            }            
         }
     }
 
@@ -133,6 +129,7 @@ public class PaddleMovement : MonoBehaviour
         {
             GameManager.Instance.Copyballs();
         }
+        AudioManager.Instance.PlayClip("GetItem");
     }
 
     public void ChangeSize()
@@ -144,14 +141,12 @@ public class PaddleMovement : MonoBehaviour
             if (transform.lossyScale.x == 1) return;
             Vector3 scale = transform.localScale;
             transform.localScale = scale + Vector3.left * sizeRate;
-            Debug.Log("size down");
         }
         else
         {
             if (transform.lossyScale.x == 2) return;
             Vector3 scale = transform.localScale;
-            transform.localScale = scale + Vector3.right * sizeRate;
-            Debug.Log("size up");
+            transform.localScale = scale + Vector3.right * sizeRate;         
         }
 
     }
@@ -164,13 +159,11 @@ public class PaddleMovement : MonoBehaviour
         {
             if (speed == 3) return;
             speed -= 1f;
-            Debug.Log("speed down");
         }
         else
         {
             if (speed == 7) return;
             speed += 1f;
-            Debug.Log("speed up");
         }
     }
 }
