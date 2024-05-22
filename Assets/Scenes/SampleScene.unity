@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   block: {fileID: 2920494751004701249, guid: 80aa3497e03c1c34ba118e8807c6f583, type: 3}
-  bossBlock: {fileID: 0}
+  bossBlock: {fileID: 267919131308954385, guid: 5d054b3e7ebaed4429f9fbb3ca2ec567, type: 3}
 --- !u!1 &406080720
 GameObject:
   m_ObjectHideFlags: 0
