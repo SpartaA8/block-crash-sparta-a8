@@ -27,7 +27,8 @@ public class PaddleMovement : MonoBehaviour
     private void Start()
     {
         controller.OnMoveEvent += Move;
-        controller.OnFireEvent += Fire;        
+        controller.OnFireEvent += Fire;
+        joint.connectedBody = rigidbody;
     }
 
     private void FixedUpdate()
