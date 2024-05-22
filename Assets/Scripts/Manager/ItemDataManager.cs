@@ -52,19 +52,14 @@ public class ItemDataManager : MonoBehaviour
 
     public void SpawnItem(Vector3 position, int blockHp)
     {
-        Debug.Log("Item Prefab: " + itemPrefab);
         int randomSpawnIndex = UnityEngine.Random.Range(0, 100); // 0부터 99 사이의 랜덤한 값을 선택
-        Debug.Log("랜덤값" + randomSpawnIndex);
         if (blockHp * 10 >= randomSpawnIndex)
         {
-            Debug.Log("첫번째 if문 문제아님");
             int randomItemIndex = UnityEngine.Random.Range(1, 5); // 1부터 4 사이의 랜덤한 값을 선택
             ItemSO itemData = GetData(randomItemIndex);
             Debug.Log("랜덤아이템값" + randomItemIndex);
             if (itemData != null && itemPrefab != null)
             {
-                Debug.Log("Item Data: " + itemData);
-                Debug.Log("itemPrefab " + itemPrefab);
                 GameObject itemObject = Instantiate(itemPrefab, position, Quaternion.identity);
                 ItemController itemController = itemObject.GetComponent<ItemController>();
                 if (itemController != null)
