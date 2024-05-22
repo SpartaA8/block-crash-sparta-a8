@@ -116,6 +116,14 @@ public class PaddleMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 12)
+        {
+            MainSceneManager.Instance.ReduceLife();
+        }
+    }
+
     public void ApplyItem(EItemType itemType)
     {
         if (itemType == EItemType.SIZE)
