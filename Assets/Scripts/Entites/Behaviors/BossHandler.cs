@@ -33,7 +33,7 @@ public class BossHandler : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else if (currentBossHp == 50)
+        else if (currentBossHp == 30)
         {
             BossPhase2?.Invoke();
         }
