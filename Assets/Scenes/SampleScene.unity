@@ -178,7 +178,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 406080721}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -742,6 +742,7 @@ GameObject:
   - component: {fileID: 1513072399}
   - component: {fileID: 1513072401}
   - component: {fileID: 1513072400}
+  - component: {fileID: 1513072402}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -825,6 +826,23 @@ MonoBehaviour:
   blockBlueSO: {fileID: 11400000, guid: 584c30362c6018541b3b34fed4049a85, type: 2}
   hardBlockSO: {fileID: 11400000, guid: c108ed15cdd2e3b43aab6c13ae791c6d, type: 2}
   invincibleBlockSO: {fileID: 11400000, guid: 1a2cd6997eda1144aa0c1fd2f02b64a9, type: 2}
+--- !u!114 &1513072402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513072396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d970ae6d2f93531429adacda0a4e8235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 2920494751004701249, guid: 5fb8faa3bb14a1b428a4cef21f35706d, type: 3}
+  ItemLIFESO: {fileID: 11400000, guid: b6050512516a5bb4a935584802b85081, type: 2}
+  ItemSIZESO: {fileID: 11400000, guid: eaced5cc9b76ab94b9bbcb745ea25b49, type: 2}
+  ItemSPEEDSO: {fileID: 11400000, guid: a99d27cc437a9ed469ac7acf7635cf21, type: 2}
+  ItemCOPYSO: {fileID: 11400000, guid: 5d73c8233c621234ca25f7dcb5951d02, type: 2}
 --- !u!1 &1852729066
 GameObject:
   m_ObjectHideFlags: 0
