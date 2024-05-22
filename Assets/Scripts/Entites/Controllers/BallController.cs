@@ -83,10 +83,12 @@ public class BallController : MonoBehaviour
         {
             case "Player":
                 ProcessPaddleCollision(collision);
+                AudioManager.Instance.PlayClip("PaddleHit");
                 break;
             case "Block":
                 ProcessBlockCollision(collision);
                 ObjectCollision(collision);
+                AudioManager.Instance.PlayClip("BlockHit");
                 break;
             case "Boss":
                 ProcessBlockCollision(collision);
@@ -94,9 +96,11 @@ public class BallController : MonoBehaviour
                 break;
             case "Bottom":
                 //Destroyed();
+                AudioManager.Instance.PlayClip("BallDestroy");
                 break;
             case "Wall":
                 ObjectCollision(collision);
+                AudioManager.Instance.PlayClip("PaddleHit");
                 break;
             default:
                 break;
@@ -114,7 +118,7 @@ public class BallController : MonoBehaviour
 
         // X축 방향의 속도를 왼쪽 또는 오른쪽으로 반전
         float direction = isLeftCollision ? -1f : 1f;
-        rigidbody.velocity = new Vector2(direction * Mathf.Abs(rigidbody.velocity.x), rigidbody.velocity.y);
+        rigidbody.velocity = new Vector2(direction * Mathf.Abs(rigidbody.velocity.x), rigidbody.velocity.y);        
     }
     //블록에 닿았을때
     private void ProcessBlockCollision(Collision2D collision)
@@ -122,7 +126,7 @@ public class BallController : MonoBehaviour
         BlockHandler blockHandler = collision.gameObject.GetComponent<BlockHandler>();
         if (blockHandler != null) blockHandler.TakeDamage(1);
         BossHandler bossHandler = collision.gameObject.GetComponent<BossHandler>();
-        if (bossHandler != null) bossHandler.TakeDamage(1);
+        if (bossHandler != null) bossHandler.TakeDamage(1);        
     }
     //패들을 제외한 오브젝트에 닿았을때
     private void ObjectCollision(Collision2D collision)

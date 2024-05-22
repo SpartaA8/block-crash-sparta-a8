@@ -48,13 +48,21 @@ public class GameManager : MonoBehaviour
     public void InitGame()
     {
         players[1].SetActive(isMulti);
-        StartStage(stageLevel);
+        StartCoroutine(StartStage(stageLevel));
         life = 0;
         for (int i = 0; i < 2; i++) AddLife();
     }
 
-    private void StartStage(int stageLevel)
-    {        
+    private IEnumerator StartStage(int stageLevel)
+    {
+        if(stageLevel > 1)
+        {
+            Time.timeScale = 0f;
+            yield return new WaitForSecondsRealtime(2f);
+            Time.timeScale = 1f;
+        }       
+        
+        CallFinishStageEvent();
         ballCount = 0;
         currentScore = 0;
         isClear = false;
@@ -89,8 +97,8 @@ public class GameManager : MonoBehaviour
         if (--blockCount == 0)
         {
             isClear = true;
-            CallFinishStageEvent();
-            StartStage(++stageLevel);        
+
+            StartCoroutine(StartStage(++stageLevel));
         }             
     }
 
