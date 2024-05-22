@@ -5,7 +5,7 @@ using static Unity.Collections.AllocatorManager;
 
 public class BallController : MonoBehaviour
 {
-    private float defaultSpeed = 2f;
+    private float defaultSpeed = 5f;
     private Rigidbody2D rigidbody;
     private TrailRenderer trailRenderer;    
 
@@ -74,6 +74,10 @@ public class BallController : MonoBehaviour
                 ProcessBlockCollision(collision);
                 ObjectCollision(collision);
                 break;
+            case "Boss":
+                ProcessBlockCollision(collision);
+                ObjectCollision(collision);
+                break;
             case "Bottom":
                 //Destroyed();
                 break;
@@ -97,29 +101,22 @@ public class BallController : MonoBehaviour
         // X축 방향의 속도를 왼쪽 또는 오른쪽으로 반전
         float direction = isLeftCollision ? -1f : 1f;
         rigidbody.velocity = new Vector2(direction * Mathf.Abs(rigidbody.velocity.x), rigidbody.velocity.y);
-        Debug.Log("되는데");
     }
     //블록에 닿았을때
     private void ProcessBlockCollision(Collision2D collision)
     {
         BlockHandler blockHandler = collision.gameObject.GetComponent<BlockHandler>();
-        if (blockHandler != null)
-        {
-            blockHandler.TakeDamage(1); // 블록의 HP를 감소.
-        }
-        else
-        {
-            Debug.Log("BlockHandler가 null입니다.");
-        }
+        if (blockHandler != null) blockHandler.TakeDamage(1);
+        BossHandler bossHandler = collision.gameObject.GetComponent<BossHandler>();
+        if (bossHandler != null) bossHandler.TakeDamage(1);
     }
     //패들을 제외한 오브젝트에 닿았을때
     private void ObjectCollision(Collision2D collision)
     {
+        Vector2 newDirection = rigidbody.velocity.normalized;
         float angleChangeRadians = Mathf.Deg2Rad * Random.Range(-5f, 5f);
-
-        Vector2 newDirection = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angleChangeRadians) * rigidbody.velocity.normalized;
-
-        rigidbody.velocity = newDirection * rigidbody.velocity.magnitude;
+        newDirection = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angleChangeRadians) * newDirection;
+        rigidbody.velocity = newDirection * defaultSpeed;
     }
     // 바닥에 닿았을때
     public void Destroyed()
