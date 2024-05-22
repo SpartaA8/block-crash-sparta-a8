@@ -50,18 +50,30 @@ public class BossController : MonoBehaviour
 
             yield return new WaitForSeconds(5f);
 
-            int randomValue = Random.Range(0, 2);
-            if (randomValue == 0)
+            int randomValue = Random.Range(1, 101);
+            if (randomValue <= 20)
             {
                 HyukAttack();
             }
-            else if (randomValue == 1)
+            else if (randomValue > 20 && randomValue <= 40)
             {
                 animator.SetTrigger("hyukAttack1");
             }
-            else if (randomValue == 2)
+            else if (randomValue > 40 && randomValue <= 60)
             {
-
+                animator.SetTrigger("hyukAttack2");
+            }
+            else if (randomValue > 60 && randomValue <= 70)
+            {
+                animator.SetTrigger("Attack1");
+            }
+            else if (randomValue > 70 && randomValue <= 80)
+            {
+                animator.SetTrigger("Attack2");
+            }
+            else if (randomValue > 80 && randomValue <= 90)
+            {
+                animator.SetTrigger("Attack3");
             }
         }
     }
