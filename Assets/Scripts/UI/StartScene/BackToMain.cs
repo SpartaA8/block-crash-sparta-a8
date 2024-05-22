@@ -11,6 +11,6 @@ public class BackToMain : MonoBehaviour
     }
     public void GoToPlayScene()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainScene");
     }
 }
