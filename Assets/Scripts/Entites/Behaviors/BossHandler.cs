@@ -32,7 +32,7 @@ public class BossHandler : BlockHandler
         {
             Destroy(gameObject);
         }
-        else if (currentBossHp == 30)
+        else if (currentHp == 30)
         {
             BossPhase2?.Invoke();
         }

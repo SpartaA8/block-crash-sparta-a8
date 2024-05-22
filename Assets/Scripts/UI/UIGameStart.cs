@@ -25,7 +25,8 @@ public class UIGameStart : MonoBehaviour
 
     private void ChangeScoreUI()
     {
-        string str = GameManager.Instance.StageLevel.ToString();
-        stageNumText.text = "Stage " + str + "\nGame Start";
+        int num = GameManager.Instance.StageLevel;
+        if (num == 5) stageNumText.text = "Boss Stage" + "\nGame Start";
+        else stageNumText.text = "Stage " + num.ToString() + "\nGame Start";
     }
 }

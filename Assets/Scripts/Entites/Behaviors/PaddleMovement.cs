@@ -109,6 +109,10 @@ public class PaddleMovement : MonoBehaviour
                 Destroy(collision.gameObject);
             }            
         }
+        else if(collision.gameObject.layer == 12)
+        {
+            GameManager.Instance.ReduceLife();
+        }
     }
 
     public void ApplyItem(EItemType itemType)

@@ -8,7 +8,8 @@ public class MiniSpearHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(collision.gameObject);
+            gameObject.SetActive(false);
+            //Destroy(collision.gameObject);
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {

@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     }
     private int blockCount;
     private int ballCount;
-    private int stageLevel = 1;
+    private int stageLevel = 5;
     public int StageLevel { get => stageLevel; }
     private bool isMulti = false;
     private int life;
@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
         CallChangeLifeEvent(true);
     }
 
-    private void ReduceLife()
+    public void ReduceLife()
     {
         if (isClear) return;
         if (life-- > 0)
@@ -212,6 +212,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         UIManager.Instance.SetActiveUI("GameOverUI", false);
         Time.timeScale = 1f;
-        StartCoroutine(StartStage(1));
+        InitGame();
     }
 }
