@@ -94,21 +94,31 @@ public class PaddleMovement : MonoBehaviour
         joint.connectedBody = ball;
         obj.GetComponent<BallController>().Catched();
     }
-
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        //오브젝트 충돌 후 효과 적용
+        // 오브젝트 충돌 후 효과 적용
         if (collision.gameObject.layer == 9)
         {
             ItemController collisionController = collision.gameObject.GetComponent<ItemController>();
-            //아이템 타입 분별 및 효과 적용
-            ApplyItem(collisionController.SoItem.itemType);
-            //아이템 먹은 후 파괴
-            Destroy(collision.gameObject);
+            if (collisionController != null)
+            {
+                // 아이템 타입 분별 및 효과 적용
+                ApplyItem(collisionController.SoItem.itemType);
+                // 아이템 먹은 후 파괴
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                Debug.LogWarning("ItemController not found on the collided object.");
+            }
         }
-    }    
+    }
+
+    public void Fire()
+    {
+        GameManager.Instance.Copyballs();
+    }
 
     public void ApplyItem(EItemType itemType)
     {

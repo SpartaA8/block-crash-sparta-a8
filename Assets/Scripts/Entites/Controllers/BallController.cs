@@ -9,7 +9,7 @@ public class BallController : MonoBehaviour
     private TrailRenderer trailRenderer;    
 
     // 공 Copy에서 사용할 각도
-    private float minRotationAngle = 30f; 
+    private float minRotationAngle = 30f;
     private float maxRotationAngle = 50f;
 
     private float defaultSpeed = 5f;
@@ -29,36 +29,36 @@ public class BallController : MonoBehaviour
     private void Awake()
     {  
         rigidbody = GetComponent<Rigidbody2D>();
-        trailRenderer = GetComponent<TrailRenderer>();       
-    }
-
-    private void FixedUpdate()
-    {
-        
+        trailRenderer = GetComponent<TrailRenderer>();
     }
 
     public void Copy()
     {
-        if (!gameObject.activeSelf) return;
-        if (isCatched) return;
-
-        GameObject rightBall = GameManager.Instance.CreateBalls();
-        GameObject leftBall = GameManager.Instance.CreateBalls();
-
-        Vector2 currentVelocity = rigidbody.velocity;
         float rotationAngle = Random.Range(minRotationAngle, maxRotationAngle);
+        RotateAngle(rotationAngle);
+        RotateAngle(-rotationAngle);
+    }
 
-        Vector2 rightDirection = Quaternion.Euler(0, 0, rotationAngle) * currentVelocity.normalized;
-        Vector2 leftDirection = Quaternion.Euler(0, 0, -rotationAngle) * currentVelocity.normalized;
+    public void RotateAngle(float rotationAngle)
+    {
+        GameObject ball = GameManager.Instance.CreateBalls();
+        if (ball == null)
+        {
+            return;
+        }
+        // 현재 공의 속도
+        Vector2 currentVelocity = rigidbody.velocity;
 
-        rightBall.transform.position = this.transform.position;
-        leftBall.transform.position = this.transform.position;
+        Vector2 direction = Quaternion.Euler(0, 0, rotationAngle) * currentVelocity.normalized;
 
-        Rigidbody2D rightRb = rightBall.GetComponent<Rigidbody2D>();
-        Rigidbody2D leftRb = leftBall.GetComponent<Rigidbody2D>();
+        // 복사할 공의 위치 설정
+        ball.transform.position = transform.position;
 
-        rightRb.velocity = rightDirection * currentVelocity.magnitude;
-        leftRb.velocity = leftDirection * currentVelocity.magnitude;
+        // 복사할 공의 Rigidbody2D Component 가져오기
+        Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
+
+        // 복사할 공의 방향과 속도 설정
+        rb.velocity = direction * currentVelocity.magnitude;
     }
 
     public void Catched()
@@ -86,15 +86,20 @@ public class BallController : MonoBehaviour
                 break;
             case "Block":
                 ProcessBlockCollision(collision);
+                ObjectCollision(collision);
                 break;
             case "Bottom":
                 //Destroyed();
+                break;
+            case "Wall":
+                ObjectCollision(collision);
                 break;
             default:
                 break;
         }
     }
 
+    //패들에 닿았을때
     private void ProcessPaddleCollision(Collision2D collision)
     {
         Vector2 collisionPoint = collision.contacts[0].point; // 패들에 어느위치에 충돌이 일어났는지 확인 하기위한 Vector
@@ -108,6 +113,7 @@ public class BallController : MonoBehaviour
         rigidbody.velocity = new Vector2(direction * Mathf.Abs(rigidbody.velocity.x), rigidbody.velocity.y);
         Debug.Log("되는데");
     }
+    //블록에 닿았을때
     private void ProcessBlockCollision(Collision2D collision)
     {
         BlockHandler blockHandler = collision.gameObject.GetComponent<BlockHandler>();
@@ -120,6 +126,16 @@ public class BallController : MonoBehaviour
             Debug.Log("BlockHandler가 null입니다.");
         }
     }
+    //패들을 제외한 오브젝트에 닿았을때
+    private void ObjectCollision(Collision2D collision)
+    {
+        float angleChangeRadians = Mathf.Deg2Rad * Random.Range(-5f, 5f);
+
+        Vector2 newDirection = Quaternion.Euler(0, 0, Mathf.Rad2Deg * angleChangeRadians) * rigidbody.velocity.normalized;
+
+        rigidbody.velocity = newDirection * rigidbody.velocity.magnitude;
+    }
+    // 바닥에 닿았을때
     public void Destroyed()
     {        
         if (!gameObject.activeSelf) return;
@@ -130,4 +146,5 @@ public class BallController : MonoBehaviour
     {
         return value == (value | 1 << layer);
     }
+
 }

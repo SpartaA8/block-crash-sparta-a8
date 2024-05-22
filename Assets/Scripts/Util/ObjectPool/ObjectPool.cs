@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -26,7 +27,7 @@ public class ObjectPool : MonoBehaviour
         foreach (var pool in pools)
         {
             Queue<GameObject> queue = new Queue<GameObject>();
-            for(int i=0;i<pool.capacity; i++)
+            for (int i = 0; i < pool.capacity; i++)
             {
                 GameObject obj = Instantiate(pool.prefab, transform);
                 obj.SetActive(false);
@@ -43,9 +44,10 @@ public class ObjectPool : MonoBehaviour
         {
             return null;
         }
-        
+
         Pool pool = pools.Find(x => x.tag == tag);
         if (pool.count >= pool.maxCapacity) return null;
+
         if (pool.capacity == pool.count)
         {
             CreateObject(pool);
@@ -66,10 +68,10 @@ public class ObjectPool : MonoBehaviour
 
         return obj;
     }
-    
+
     private void CreateObject(Pool pool)
-    {         
-        for (int i = 0; i < pool.capacity*2; i++)
+    {
+        for (int i = 0; i < pool.capacity * 2; i++)
         {
             GameObject obj = Instantiate(pool.prefab, transform);
             obj.SetActive(false);
@@ -85,4 +87,5 @@ public class ObjectPool : MonoBehaviour
         Pool pool = pools.Find(x => x.tag == obj.tag);
         pool.count--;
     }
+
 }
