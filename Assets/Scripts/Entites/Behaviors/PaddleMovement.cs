@@ -115,11 +115,6 @@ public class PaddleMovement : MonoBehaviour
         }
     }
 
-    public void Fire()
-    {
-        GameManager.Instance.Copyballs();
-    }
-
     public void ApplyItem(EItemType itemType)
     {
         if (itemType == EItemType.SIZE)
