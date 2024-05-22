@@ -8,6 +8,7 @@ public class PaddleMovement : MonoBehaviour
 {
     private PlayerController controller;
     private Rigidbody2D rigidbody;
+    private BoxCollider2D collider;
     private FixedJoint2D joint;
 
     private float size;
@@ -19,6 +20,7 @@ public class PaddleMovement : MonoBehaviour
     {
         controller = GetComponentInParent<PlayerController>();
         rigidbody = GetComponent<Rigidbody2D>();   
+        collider = GetComponent<BoxCollider2D>();
         joint = GetComponent<FixedJoint2D>();
     }
 
@@ -59,15 +61,20 @@ public class PaddleMovement : MonoBehaviour
 
     private void CheckHold()
     {
-       
+        RaycastHit2D hit = Physics2D.BoxCast(collider.bounds.center, collider.size, 0f, Vector2.up, 0.1f,LayerMask.GetMask("Ball"));
+
+        if(hit.collider != null)
+        {
+            HoldBall(hit.collider.gameObject, hit.point.x);
+        }
     }
 
     private void ShootBall()
     {        
         isHold = false;
-        float posX = joint.anchor.x < 0 ? 1f : -1f;        
+        float posX = joint.connectedAnchor.x > 0 ? 1f : -1f;        
         BallController ball = joint.connectedBody.gameObject.GetComponent<BallController>();
-        joint.connectedBody = null;
+        joint.connectedBody = rigidbody;
         joint.enabled = false;
         ball.Shoot(posX);        
     }
