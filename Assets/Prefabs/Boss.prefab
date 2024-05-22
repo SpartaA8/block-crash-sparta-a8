@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbcb89c3d71bc64418d38a43b8968af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossBlockSO: {fileID: 11400000, guid: bfe3321a10f9b9647bf4bbb41f1a0d18, type: 2}
+  blockSO: {fileID: 11400000, guid: bfe3321a10f9b9647bf4bbb41f1a0d18, type: 2}
 --- !u!95 &786653182697103793
 Animator:
   serializedVersion: 5

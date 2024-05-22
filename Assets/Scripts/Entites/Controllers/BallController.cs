@@ -93,7 +93,7 @@ public class BallController : MonoBehaviour
                 ObjectCollision(collision);
                 break;
             case "Bottom":
-                Destroyed();
+                //Destroyed();
                 break;
             case "Wall":
                 ObjectCollision(collision);

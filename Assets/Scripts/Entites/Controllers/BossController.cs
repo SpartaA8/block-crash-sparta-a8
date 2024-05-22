@@ -15,8 +15,7 @@ public class BossController : MonoBehaviour
     }
 
     public void Start()
-    {
-        
+    {        
         ChangeBossIndex = animator.GetLayerIndex("ChangeBoss Layer");
         CurrentPattern = StartCoroutine(BossAttackPhase1());
         bossHandler.BossPhase2 += BossChangePattern;

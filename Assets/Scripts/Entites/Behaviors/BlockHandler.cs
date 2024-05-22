@@ -6,11 +6,11 @@ using static Unity.Collections.AllocatorManager;
 
 public class BlockHandler : MonoBehaviour
 {
-    [SerializeField]private BlockSO blockSO;
+    [SerializeField]protected BlockSO blockSO;
     private SpriteRenderer spriteRenderer;
-    private int currentHp;
+    protected int currentHp;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         GameManager.Instance.OnFinishStageEvent += DestroyBlock;
     }
@@ -29,7 +29,7 @@ public class BlockHandler : MonoBehaviour
         BlockSpriteChange();
     }    
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
 
         if (!blockSO.isInvincible)
@@ -49,7 +49,7 @@ public class BlockHandler : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         GameManager.Instance.OnFinishStageEvent -= DestroyBlock;
     }

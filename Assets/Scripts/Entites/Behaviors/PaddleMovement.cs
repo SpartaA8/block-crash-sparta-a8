@@ -137,19 +137,21 @@ public class PaddleMovement : MonoBehaviour
 
     public void ChangeSize()
     {        
-        int randomsize = Random.Range(0, 1);
+        int randomsize = Random.Range(0, 4);
     
         if(randomsize == 0)
         {
-            if (transform.localScale.x == 1) return;
+            if (transform.lossyScale.x == 1) return;
             Vector3 scale = transform.localScale;
             transform.localScale = scale + Vector3.left * sizeRate;
+            Debug.Log("size down");
         }
         else
         {
-            if (transform.localScale.x == 2) return;
+            if (transform.lossyScale.x == 2) return;
             Vector3 scale = transform.localScale;
             transform.localScale = scale + Vector3.right * sizeRate;
+            Debug.Log("size up");
         }
 
     }
@@ -158,15 +160,17 @@ public class PaddleMovement : MonoBehaviour
     {
         int randomsize = Random.Range(0, 1);
 
-        if (randomsize == 0)
+        if (randomsize == 4)
         {
             if (speed == 3) return;
             speed -= 1f;
+            Debug.Log("speed down");
         }
         else
         {
             if (speed == 7) return;
             speed += 1f;
+            Debug.Log("speed up");
         }
     }
 }

@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         ballCount = 0;
         currentScore = 0;
         isClear = false;
-        if (stageLevel < 5) blockCount = stageController.StartStage(stageLevel);        
+        blockCount = stageController.StartStage(stageLevel);        
 
         ResetPlayerPos();        
     }
@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
     // 목숨 추가 아이템
     public void AddLife()
     {
+        if (life == 5) return;
         life++;
         CallChangeLifeEvent(true);
     }
