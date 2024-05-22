@@ -7,7 +7,6 @@ using static Unity.Collections.AllocatorManager;
 public class BlockHandler : MonoBehaviour
 {
     [SerializeField]private BlockSO blockSO;
-    [SerializeField] private GameObject itemPrefab; // 아이템 생성 Prefab
     private SpriteRenderer spriteRenderer;
     private int currentHp;
 
@@ -39,20 +38,13 @@ public class BlockHandler : MonoBehaviour
             if (currentHp <= 0)
             {
                 Destroy(gameObject);
-                SpawnItem();
+                Debug.Log("SpawnItem 메서드 호출 시도");
+                ItemDataManager.Instance.SpawnItem(transform.position, blockSO.hp);
             }
         }
         
     }
-    private void SpawnItem()
-    {
-        int randomIndex = Random.Range(1, 5); // 1부터 4 사이의 랜덤한 값을 선택
-        ItemSO itemData = ItemDataManager.Instance.GetData(randomIndex);
-        if (itemData != null && itemPrefab != null)
-        {
-            Instantiate(itemPrefab, transform.position, Quaternion.identity);
-        }
-    }
+    
     private void OnDestroy()
     {
         GameManager.Instance.DestroyBlock(blockSO.score);

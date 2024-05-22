@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847d14a0a2c1d854ca4e47cd50a4ff47, type: 3}
   m_Name: ItemSIZESO
   m_EditorClassIdentifier: 
-  index: 0
-  itemType: 0
-  imageSprite: {fileID: 0}
+  index: 3
+  itemType: 1
+  imageSprite: {fileID: 255511665, guid: 736a383e9f658c64689e22fce69bd68e, type: 3}
