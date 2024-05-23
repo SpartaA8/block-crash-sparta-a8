@@ -25,7 +25,8 @@ public partial class RankBoardManager : MonoBehaviour
     private void SaveRankings()
     {
         string json = JsonUtility.ToJson(new RankInfoListWrapper(rankList));
-        File.WriteAllText(Path.Combine(Application.persistentDataPath, SaveFileName), json);
+        string path = Application.dataPath + SaveFileName;
+        File.WriteAllText(path,json);
     }
     private void LoadRankings()
     {

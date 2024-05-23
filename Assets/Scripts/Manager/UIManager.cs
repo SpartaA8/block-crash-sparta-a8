@@ -19,8 +19,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Instance = this;            
-            if (SceneManager.GetActiveScene().name != "MainScene") return;
+            Instance = this;                        
             UIList = new List<GameObject>();
             parent = GameObject.Find("UI");
             foreach (GameObject go in UIPrefabs)

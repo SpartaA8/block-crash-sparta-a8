@@ -38,10 +38,10 @@ public class PaddleMovement : MonoBehaviour
 
     public void ResetState(Vector3 position)
     {
-        transform.position = position;
+        transform.localPosition = position;
         speed = 4f;
         Vector3 scale = transform.localScale;
-        transform.localScale = new Vector3(1.25f, 0.25f, 0);
+        transform.localScale = new Vector3(1f, 1f, 0);
     }
 
     public void Move(float input)
@@ -71,7 +71,7 @@ public class PaddleMovement : MonoBehaviour
 
         if(hit.collider != null)
         {
-            HoldBall(hit.collider.gameObject, hit.point.x);
+            HoldBall(hit.collider.gameObject);
         }
     }
 
@@ -85,12 +85,12 @@ public class PaddleMovement : MonoBehaviour
         ball.Shoot(posX);        
     }
 
-    public void HoldBall(GameObject obj, float posX)
+    public void HoldBall(GameObject obj)
     {
         Rigidbody2D ball = obj.GetComponent<Rigidbody2D>();
         isHold = true;
-        float posY = -3.97f;
-        obj.transform.position = new Vector2(posX, posY);
+        Vector3 pos = 0.3f * Vector3.up;
+        obj.transform.position = pos + gameObject.transform.position;
         joint.enabled = true;
         joint.connectedBody = ball;
         obj.GetComponent<BallController>().Catched();
@@ -116,6 +116,14 @@ public class PaddleMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 12)
+        {
+            MainSceneManager.Instance.ReduceLife();
+        }
+    }
+
     public void ApplyItem(EItemType itemType)
     {
         if (itemType == EItemType.SIZE)
@@ -134,7 +142,7 @@ public class PaddleMovement : MonoBehaviour
         {
             MainSceneManager.Instance.Copyballs();
         }
-        AudioManager.Instance.PlayClip("GetItem");
+        SoundManager.instance.PlayClip("GetItem");
     }
 
     public void ChangeSize()

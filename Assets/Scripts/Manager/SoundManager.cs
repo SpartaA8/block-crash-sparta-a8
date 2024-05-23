@@ -13,6 +13,8 @@ public class SoundManager : MonoBehaviour
     private AudioSource FxSound;
     [SerializeField]
     private GameObject SettingUI;
+    [SerializeField]
+    private List<AudioClip> FxList;
 
     [SerializeField]
     private AudioMixer audioMixer;
@@ -49,5 +51,9 @@ public class SoundManager : MonoBehaviour
         audioMixer.SetFloat("BGM", Mathf.Log10(PlayerPrefs.GetFloat("BGMVolume")) * 20);
         audioMixer.SetFloat("FX", Mathf.Log10(PlayerPrefs.GetFloat("FXVolume")) * 20);
     }
-
+    public void PlayClip(string clipName)
+    {
+        FxSound.clip = FxList.Find(x => x.name == clipName);
+        FxSound.PlayOneShot(FxSound.clip);
+    }
 }

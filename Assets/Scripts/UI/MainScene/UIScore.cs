@@ -6,23 +6,23 @@ using UnityEngine.UI;
 
 public class UIScore : MonoBehaviour
 {
-    private TextMeshProUGUI highScoreText;
-    private TextMeshProUGUI currentScoreText;
+    private Text highScoreText;
+    private Text currentScoreText;
 
     private void Awake()
     {
-        highScoreText = GetComponentsInChildren<TextMeshProUGUI>()[1];
-        currentScoreText = GetComponentsInChildren<TextMeshProUGUI>()[3];        
+        highScoreText = GetComponentsInChildren<Text>()[0];
+        currentScoreText = GetComponentsInChildren<Text>()[1];        
     }
 
-    private void OnEnable()
+    private void Start()
     {
         MainSceneManager.Instance.OnChangeScoreEvent += ChangeScoreUI;        
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        MainSceneManager.Instance.OnChangeScoreEvent -= ChangeScoreUI;        
+        MainSceneManager.Instance.OnChangeScoreEvent -= ChangeScoreUI; 
     }
 
     private void ChangeScoreUI()

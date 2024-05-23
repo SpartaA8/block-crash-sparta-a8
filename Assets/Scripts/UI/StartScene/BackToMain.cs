@@ -9,8 +9,9 @@ public class BackToMain : MonoBehaviour
     {
         SceneManager.LoadScene("StartScene");
     }
-    public void GoToPlayScene()
+    public void GoToPlayScene(bool isMulti)
     {
+        GameManager.Instance.IsMulti = isMulti;
         SceneManager.LoadScene("MainScene");
-    }
+    }    
 }
