@@ -78,7 +78,7 @@ public class MainSceneManager : MonoBehaviour
         players[0] = GameObject.Find("Player").transform.GetChild(0).gameObject;
         players[1] = GameObject.Find("Player").transform.GetChild(1).gameObject;        
         stageController = GameObject.Find("Stage").gameObject.GetComponent<StageController>();
-        UIManager.Instance.SetActiveUI("ScoreUI", true);
+        //UIManager.Instance.SetActiveUI("ScoreUI", true);
         isMulti = GameManager.Instance.IsMulti;
 
         InitGame();
@@ -126,14 +126,13 @@ public class MainSceneManager : MonoBehaviour
 
     private void ResetPlayerPos()
     {  
-        Vector3 posX = isMulti ? Vector3.left * 2 : Vector3.zero;
-        Vector3 posY = Vector3.down * 4.2f;
-        players[0].GetComponent<PaddleMovement>().ResetState(posX + posY);
-        if (isMulti) players[1].GetComponent<PaddleMovement>().ResetState(-posX + posY);
+        Vector3 posX = isMulti ? Vector3.left * 2 : Vector3.zero;        
+        players[0].GetComponent<PaddleMovement>().ResetState(posX);
+        if (isMulti) players[1].GetComponent<PaddleMovement>().ResetState(-posX);
 
         GameObject obj = CreateBalls();
         obj.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        players[0].GetComponent<PaddleMovement>().HoldBall(obj, posX.x);
+        players[0].GetComponent<PaddleMovement>().HoldBall(obj);
     }
 
     // 블록 파괴 시 
@@ -177,7 +176,7 @@ public class MainSceneManager : MonoBehaviour
             CallChangeLifeEvent(false);
             return;
         }
-        StartCoroutine(GameOver());
+        GameOver();
     }
 
     // 볼 복사 아이템
@@ -206,14 +205,9 @@ public class MainSceneManager : MonoBehaviour
             ReduceLife();
     }    
 
-    private IEnumerator GameOver()
+    private void GameOver()
     {
-        // 시작메뉴 씬으로 이동 및 랭킹진입시 이름입력구현 필요
-        Time.timeScale = 0f;
-        UIManager.Instance.SetActiveUI("GameOverUI", true);
-        yield return new WaitForSecondsRealtime(2f);
-        UIManager.Instance.SetActiveUI("GameOverUI", false);
-        Time.timeScale = 1f;
-        InitGame();
+        CallFinishStageEvent();
+        GameOverManager.Instance.MakeGameOverUI();
     }
 }

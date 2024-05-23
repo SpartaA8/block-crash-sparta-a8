@@ -1004,6 +1004,11 @@ MonoBehaviour:
   backgroundMusic: {fileID: 6608665966820589502, guid: 68fb7e6e59fa3024cbc57c41d0cefab2, type: 3}
   FxSound: {fileID: 6627354900269863408, guid: 3caa4a623fe53d546ac93915fbc95b00, type: 3}
   SettingUI: {fileID: 0}
+  FxList:
+  - {fileID: 8300000, guid: b0b9ba8bb1882c94cb4ef14cf39ec30e, type: 3}
+  - {fileID: 8300000, guid: a01c7691cd6be294db8dda94fea45d41, type: 3}
+  - {fileID: 8300000, guid: 864aa0037ff25d741bc58ddd9cc65d31, type: 3}
+  - {fileID: 8300000, guid: 473feecf24e25bd4e9fde23f399afb02, type: 3}
   audioMixer: {fileID: 24100000, guid: ffd2ef2468d2b814d9d35d348ae83aa2, type: 2}
 --- !u!4 &1785954147
 Transform:

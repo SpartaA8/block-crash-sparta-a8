@@ -11,8 +11,6 @@ public class GameOverManager : MonoBehaviour
     public GameObject gameObject2;
     public GameObject gameObject3;
     public GameObject gameObject4;
-    public GameObject gameObject5;
-    public GameObject gameObject6;
 
     public GameObject GameOverUI;
 
@@ -31,15 +29,14 @@ public class GameOverManager : MonoBehaviour
         gameObject1.SetActive(false);
         gameObject2.SetActive(false);
         gameObject3.SetActive(false);
-        gameObject4.SetActive(false);
-        gameObject5.SetActive(false);
+        gameObject4.SetActive(false);        
     }
 
     public void MakeGameOverUI()
     {
         SetOff();
-        Instantiate(GameOverUI);
-        GameOverUI.SetActive(true);
+        Instantiate(GameOverUI).SetActive(true);
+        
     }
 
     public void ConfirmPlayerName()
