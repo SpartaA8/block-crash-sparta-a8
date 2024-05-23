@@ -83,12 +83,12 @@ public class BallController : MonoBehaviour
         {
             case "Player":
                 ProcessPaddleCollision(collision);
-                AudioManager.Instance.PlayClip("PaddleHit");
+                SoundManager.instance.PlayClip("PaddleHit");
                 break;
             case "Block":
                 ProcessBlockCollision(collision);
                 ObjectCollision(collision);
-                AudioManager.Instance.PlayClip("BlockHit");
+                SoundManager.instance.PlayClip("BlockHit");
                 break;
             case "Boss":
                 ProcessBlockCollision(collision);
@@ -96,11 +96,11 @@ public class BallController : MonoBehaviour
                 break;
             case "Bottom":
                 Destroyed();
-                AudioManager.Instance.PlayClip("BallDestroy");
+                SoundManager.instance.PlayClip("BallDestroy");
                 break;
             case "Wall":
                 ObjectCollision(collision);
-                AudioManager.Instance.PlayClip("PaddleHit");
+                SoundManager.instance.PlayClip("PaddleHit");
                 break;
             default:
                 break;

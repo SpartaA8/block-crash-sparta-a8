@@ -202,7 +202,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3854013425336978344}
         m_TargetAssemblyTypeName: Button, Assembly-CSharp
-        m_MethodName: CloseBtn
+        m_MethodName: CloseOpenBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
